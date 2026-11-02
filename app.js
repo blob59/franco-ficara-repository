@@ -19,10 +19,15 @@ for(const p of items){
  const desc=document.createElement("p");desc.textContent=p.descrizione;
  const bottom=document.createElement("div");bottom.className="program-bottom";
  const vers=document.createElement("span");vers.className="version";vers.textContent=p.versione;
- let action;const link=allowedLink(p.download);const ready=Boolean(link)&&p.stato==="Disponibile";
- if(ready){action=document.createElement("a");action.className="download";action.href=link;action.target="_blank";action.rel="noopener noreferrer";action.textContent="Scarica gratis ↓";state.className+=" available"}
- else if(allowedLink(p.info_url)){action=document.createElement("a");action.className="download";action.href=allowedLink(p.info_url);action.target="_blank";action.rel="noopener noreferrer";action.textContent="Scheda del programma ↗"}else{action=document.createElement("span");action.className="download disabled";action.textContent="Download in preparazione ⌛";action.setAttribute("aria-label","Download non ancora disponibile")}
- bottom.append(vers,action);card.append(top,meta,title,desc,bottom);grid.append(card);
+ const actions=document.createElement("div");actions.className="program-actions";
+ const zip=allowedLink(p.download),online=allowedLink(p.app_url),ready=Boolean(zip||online)&&(p.stato==="Disponibile"||(p.tipo==="portale"&&p.stato==="Portale esistente"));
+ if(ready){
+  state.classList.add("available");
+  if(online){const a=document.createElement("a");a.className="download";a.href=online;a.target="_blank";a.rel="noopener noreferrer";a.textContent=p.app_label||"Apri online ↗";actions.append(a);}
+  if(zip){const a=document.createElement("a");a.className="download secondary";a.href=zip;a.textContent="Scarica ZIP ↓";a.download="Franco_QR_Studio_PUBBLICO.zip";actions.append(a);}
+ }else if(allowedLink(p.info_url)){const a=document.createElement("a");a.className="download";a.href=allowedLink(p.info_url);a.target="_blank";a.rel="noopener noreferrer";a.textContent="Scheda del programma ↗";actions.append(a);
+ }else{const s=document.createElement("span");s.className="download disabled";s.textContent="Download in preparazione ⌛";s.setAttribute("aria-label","Download non ancora disponibile");actions.append(s);}
+ bottom.append(vers,actions);card.append(top,meta,title,desc,bottom);grid.append(card);
 }
 $("empty-results").hidden=items.length!==0;
 for(const b of $("filters").querySelectorAll("button"))b.setAttribute("aria-pressed",String(b.dataset.filter===active));
