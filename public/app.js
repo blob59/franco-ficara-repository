@@ -20,11 +20,11 @@ for(const p of items){
  const bottom=document.createElement("div");bottom.className="program-bottom";
  const vers=document.createElement("span");vers.className="version";vers.textContent=p.versione;
  const actions=document.createElement("div");actions.className="program-actions";
- const zip=allowedLink(p.download),online=allowedLink(p.app_url),ready=Boolean(zip||online)&&(p.stato==="Disponibile"||(p.tipo==="portale"&&p.stato==="Portale esistente"));
+ const zip=allowedLink(p.download),online=allowedLink(p.app_url),ready=Boolean(zip||online)&&(p.stato==="Disponibile"||p.stato==="Prova online"||(p.tipo==="portale"&&p.stato==="Portale esistente"));
  if(ready){
   state.classList.add("available");
   if(online){const a=document.createElement("a");a.className="download";a.href=online;a.target="_blank";a.rel="noopener noreferrer";a.textContent=p.app_label||"Apri online ↗";actions.append(a);}
-  if(zip){const a=document.createElement("a");a.className="download secondary";a.href=zip;a.textContent="Scarica ZIP ↓";a.download="Franco_QR_Studio_PUBBLICO.zip";actions.append(a);}
+  if(zip){const a=document.createElement("a");a.className="download secondary";a.href=zip;a.textContent="Scarica ZIP ↓";if(p.download_filename)a.download=p.download_filename;actions.append(a);}
  }else if(allowedLink(p.info_url)){const a=document.createElement("a");a.className="download";a.href=allowedLink(p.info_url);a.target="_blank";a.rel="noopener noreferrer";a.textContent="Scheda del programma ↗";actions.append(a);
  }else{const s=document.createElement("span");s.className="download disabled";s.textContent="Download in preparazione ⌛";s.setAttribute("aria-label","Download non ancora disponibile");actions.append(s);}
  bottom.append(vers,actions);card.append(top,meta,title,desc,bottom);grid.append(card);
