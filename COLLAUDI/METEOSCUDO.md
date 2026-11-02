@@ -1,7 +1,7 @@
 # MeteoScudo — ricognizione pre-lancio
 
 **Data:** 2 novembre 2026  
-**Stato:** progetto esistente da recuperare e collaudare. **Non pronto per il rilascio** nel Repository.
+**Stato:** applicazione esistente e accessibile dal browser dell'autore, confermata il 2 novembre 2026. **Ancora da collaudare tecnicamente** prima del rilascio nel Repository.
 
 ## Progetto originale (non ricreare alla cieca)
 - URL pubblico precedentemente configurato: https://meteo.francoficara.com/
@@ -15,7 +15,7 @@
 - [x] Individuato il nome tecnico del progetto Cloudflare e il nome dell'archivio v1.5 dai precedenti passaggi di lavoro.
 - [x] Verificati i repository GitHub collegati: **non emerge un repository MeteoScudo dedicato** nell'elenco attualmente accessibile; non presupporre che non esista altrove.
 - [x] Ricercato l'archivio v1.5 fra i file accessibili in questa conversazione e nella Library: **non individuato**.
-- [ ] **Non verificata** la raggiungibilità del sito: l'accesso esterno disponibile in questa sessione non riesce a risolvere/recuperare la pagina. Non interpretare questo come prova che il sito sia offline.
+- [x] **Esistenza e apertura del sito confermate direttamente dall'autore** in data 2 novembre 2026: https://meteo.francoficara.com/. La verifica indipendente da parte degli strumenti automatici non è riuscita per un limite di accesso/DNS e non costituisce un'indicazione di malfunzionamento del sito.
 - [ ] Il codice originario non è stato letto, analizzato o modificato.
 
 ## Collaudo da fare appena si recupera il pacchetto o i sorgenti autentici
