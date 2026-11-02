@@ -21,7 +21,7 @@ for(const p of items){
  const vers=document.createElement("span");vers.className="version";vers.textContent=p.versione;
  let action;const link=allowedLink(p.download);const ready=Boolean(link)&&p.stato==="Disponibile";
  if(ready){action=document.createElement("a");action.className="download";action.href=link;action.target="_blank";action.rel="noopener noreferrer";action.textContent="Scarica gratis ↓";state.className+=" available"}
- else{action=document.createElement("span");action.className="download disabled";action.textContent="Download in preparazione ⌛";action.setAttribute("aria-label","Download non ancora disponibile")}
+ else if(allowedLink(p.info_url)){action=document.createElement("a");action.className="download";action.href=allowedLink(p.info_url);action.target="_blank";action.rel="noopener noreferrer";action.textContent="Scheda del programma ↗"}else{action=document.createElement("span");action.className="download disabled";action.textContent="Download in preparazione ⌛";action.setAttribute("aria-label","Download non ancora disponibile")}
  bottom.append(vers,action);card.append(top,meta,title,desc,bottom);grid.append(card);
 }
 $("empty-results").hidden=items.length!==0;
