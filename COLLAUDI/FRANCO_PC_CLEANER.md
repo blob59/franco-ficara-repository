@@ -1,24 +1,51 @@
-# Franco PC Cleaner 3.4 — Controllo preliminare del pacchetto
+# Franco PC Cleaner — rapporto di collaudo del 2 novembre 2026
 
-**Stato: in collaudo, NON pronto per il lancio pubblico.**
+**Stato: candidato pre-lancio 3.5, non autorizzato alla distribuzione pubblica.**
 
-## Materiale disponibile
-Archivio `Franco_PC_Cleaner_3_4.zip` presente tra i file della conversazione. File interni: `franco_pc_cleaner.py`, `riordino_cartelle.py`, `LEGGIMI.txt`, `AVVIA_FRANCO_PC_CLEANER.bat`.
+## Materiale verificato
+La versione iniziale `Franco_PC_Cleaner_3_4.zip` è stata esaminata ed è integra. È stato realizzato in ambiente di prova un archivio aggiornato `Franco_PC_Cleaner_3_5_CANDIDATO_PRE_LANCIO.zip`. **Il nuovo archivio non è ancora stato pubblicato sul sito o su GitHub**, e deve rimanere un candidato fino a test su Windows.
 
-## Controlli eseguiti — 2 novembre 2026
-- [x] Archivio ZIP integro.
-- [x] I due sorgenti Python superano il controllo sintattico (`ast.parse`).
-- [x] Le istruzioni precisano che richiede Windows, Python 3 e Tkinter; non è un programma `.exe` autonomo.
-- [x] Il codice contiene spostamento in quarantena, ripristino e archiviazione recuperabile.
-- [x] Individuata una funzione di **eliminazione definitiva dei file in quarantena**: chiede conferma esplicita e parola `ELIMINA`. È un'operazione distruttiva che richiede test rigorosi.
-- [x] Il riordino cartelle prevede protezioni e conferme, ma resta possibile spostare manualmente copie di progetti dopo autorizzazione.
+## Correzioni apportate nel candidato 3.5
 
-## Verifiche mancanti prima di distribuire
-- [ ] Test reale in Windows in una cartella di prova contenente solo file fittizi.
-- [ ] Verifica che non sposti i file necessari al funzionamento di applicazioni e progetti.
-- [ ] Prove quarantena/ripristino e gestione manifest dopo errori.
-- [ ] Prova eliminazione definitiva **solo su file fittizi** e verifica delle conferme.
-- [ ] Confezionamento professionale e istruzioni per chi non ha Python installato, oppure precisare chiaramente il requisito.
-- [ ] Test antivirus e controllo dei percorsi che contengono dati personali.
+- La ricerca di download parziali `.crdownload` propone soltanto quelli all'interno di una cartella Download/Downloads, non quelli sparsi in altre cartelle.
+- Nuovo modulo `operazioni_sicure.py` per lo spostamento e il ripristino dei singoli file: impedisce di operare su symlink/junction, blocca file cambiati dalla scansione, evita spostamenti tra volumi e annulla lo spostamento se fallisce la registrazione sul manifest.
+- Il ripristino accetta solo file presenti direttamente nella quarantena, senza fidarsi di percorsi arbitrari eventualmente inseriti in un registro manipolato.
+- Il ripristino non sovrascrive destinazioni esistenti; blocca destinazioni con collegamenti o junction.
+- Durante una scansione, le operazioni di spostamento e ripristino sono bloccate.
+- La rimozione definitiva richiede due conferme, inclusa la parola esatta **ELIMINA**; non elimina file non registrati.
+- Avvio Windows `.bat` corretto per evitare l'esecuzione due volte dopo un errore.
+- Colonna «Motivo» più leggibile e istruzioni italiane aggiornate: il pacchetto ZIP richiede Python 3 con Tkinter, **non è un eseguibile autonomo**.
 
-**Non condividere il pacchetto come versione definitiva finché questi test non sono superati.**
+## Test effettivamente eseguiti
+
+**9 test automatici superati**, tutti in cartelle temporanee con file fittizi e senza accedere al PC dell'utente:
+
+1. Quarantena e ripristino reversibile di un file.
+2. Rifiuto di spostamento per file modificato dopo la scansione.
+3. Rifiuto di voci di manifest che puntano fuori dalla quarantena.
+4. Rifiuto di sovrascrittura di file esistenti.
+5. Rifiuto di symlink al posto del file.
+6. Confronto di cartelle identiche (compresa cartella vuota), archiviazione e ripristino.
+7. Protezione di un progetto Digital Studio contro l'archiviazione automatica.
+8. Rifiuto di archiviazione se una copia cambia rispetto alla verifica.
+9. Eliminazione definitiva solo con conferma specifica, senza rimuovere file non registrati.
+
+**Smoke test dell'interfaccia grafica in ambiente Linux virtuale con Tk 8.6: superato.** Sono stati analizzati 6 file fittizi; identificato 1 gruppo di duplicati; proposti soltanto 2 vecchi download in Downloads, escludendo correttamente un file parziale con la stessa estensione presente altrove. Nessun file reale o personale è stato cancellato.
+
+**Controllo sintattico:** entrambi gli script originali e il nuovo modulo compilano senza errori. Archivio ZIP candidato verificato integro.
+
+## Prove ancora obbligatorie prima del rilascio
+
+- [ ] Avvio reale su Windows 10 e Windows 11, con Python e Tkinter presenti.
+- [ ] Prova su cartelle finte Windows per confermare i controlli junction/reparse e lo spostamento atomico.
+- [ ] Test di esportazione CSV e stampa dei messaggi di errore nell'interfaccia Windows.
+- [ ] Verifica dell'antivirus e delle istruzioni per utenti senza Python.
+- [ ] Eventuale confezionamento `.exe` Windows, seguito da firma/verifica e test.
+- [ ] Test regressione dell'interfaccia dopo ogni correzione.
+- [ ] Approvazione esplicita del rilascio, insieme agli altri quattro programmi.
+
+## Limiti importanti
+
+Il cleaner non elimina automaticamente i file duplicati. Spostare file o cartelle in quarantena/archivio **sullo stesso disco non libera spazio**; l'eliminazione definitiva comporta perdita dei file e va eseguita soltanto dopo una verifica manuale. La selezione manuale di un progetto, anche se protetto dal piano automatico, può interrompere programmi che dipendono dalla posizione originale.
+
+**Prossimo programma da collaudare:** AntiTruffa.
