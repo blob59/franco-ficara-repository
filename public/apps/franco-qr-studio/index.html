@@ -37,6 +37,8 @@
   html=html.replace(/<script\s+src="qr-engine\.js"\s+defer><\/script>/i,'<script>'+result['qr-engine.js']+'<\/script>');
   html=html.replace(/<script\s+src="app\.js"\s+defer><\/script>/i,'<script>'+result['app.js']+'<\/script>');
   if(html.includes('src="qr-engine.js"')||html.includes('src="app.js"'))issue('Impossibile avviare gli script');
+  html=html.replace('<span class="topbar-brand">','<a class="ff-back" href="/" title="Torna al catalogo dei programmi">← Tutti i progetti</a><span class="topbar-brand">');
+  html=html.replace('</head>','<style>.ff-back{display:inline-flex;align-items:center;margin-right:14px;padding:9px 13px;background:#ffffff15;border:1px solid #8090ba55;border-radius:9px;font:700 12px system-ui,sans-serif;color:inherit;text-decoration:none;white-space:nowrap}.ff-back:hover{background:#5474cd35}@media(max-width:600px){.ff-back{font-size:11px;padding:7px 9px;margin-right:8px}}</style></head>');
   document.open();document.write(html);document.close();
  }catch(e){const m=document.getElementById('message');if(m)m.textContent='Non riesco ad avviare il programma: '+(e?.message||'errore sconosciuto')+'. Puoi comunque scaricare il file ZIP.';console.error('Avvio Franco QR Studio:',e);}
 })();
