@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Digital Studio — Laboratorio Web | Franco Ficara Digital Studio</title>
+<meta name="description" content="Anteprima gratuita di Digital Studio: visualizzazione musicale 16:9 e registrazione video dal browser.">
+<style>
+:root{font-family:Inter,system-ui,'Segoe UI',sans-serif;color:#f9f0e9;background:#0f0d17}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse 85% 90% at 50% 0,#372336 0,#14121b 63%,#0b1017 100%);min-height:100vh}
+.shell{max-width:1400px;margin:auto;padding:18px clamp(14px,3vw,36px) 32px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:15px}
+h1{font-size:clamp(20px,2.6vw,34px);margin:0;letter-spacing:.015em}h1 span{color:#efbb84}.brand{font-size:11px;letter-spacing:.15em;color:#cab3af;margin-top:6px}
+a{color:#eab68a;text-decoration:none}.back{background:#241e2b;padding:9px 12px;border:1px solid #6b4657;border-radius:10px;font-size:13px}
+.info{background:#211d2b;border:1px solid #514250;color:#f6dbc2;padding:13px 16px;border-radius:12px;margin:2px 0 16px;line-height:1.55;font-size:13px}
+.stage{border:1px solid #75533d;border-radius:16px;overflow:hidden;box-shadow:0 25px 90px #0008;background:#0a1018;aspect-ratio:16/9}
+canvas{display:block;width:100%;height:100%}
+.panel{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;background:#1c1723;border:1px solid #5a4147;border-radius:16px;padding:16px;margin-top:17px}
+.field{display:grid;gap:7px;min-width:220px;flex:1}
+label{color:#e8cab4;font-size:12px;font-weight:650}
+input[type=file]{max-width:100%;color:#e0cad3;font-size:12px}
+button{border:1px solid #a87857;border-radius:10px;padding:11px 16px;background:linear-gradient(#d69b63,#ab6a52);color:#16101c;cursor:pointer;font-weight:750;min-height:42px}
+button.alt{background:#30283a;color:#e9d3ca;border-color:#665362}button:disabled{opacity:.42;cursor:not-allowed}
+.status{font-size:13px;color:#dbc4bb;margin-top:13px;min-height:20px}
+p.footer{font-size:12px;color:#9f93a6;line-height:1.65}
+@media(max-width:650px){.panel{gap:10px}.panel button{flex:1;min-width:120px}.stage{border-radius:9px}}
+</style></head><body>
+<div class="shell">
+<header><div><h1>Digital Studio <span>· Laboratorio Web</span></h1><div class="brand">FRANCO FICARA DIGITAL STUDIO</div></div><a class="back" href="/">← Tutti i progetti</a></header>
+<div class="info"><strong>ANTEPRIMA WEB SPERIMENTALE.</strong> Carica un brano musicale dal tuo dispositivo, avvia l'anteprima e registra un video musicale in <strong>16:9</strong>. I file rimangono nel browser. Questa è una versione ridotta, non il Digital Studio Windows completo. Per pubblicare video, usa soltanto musica e immagini per cui possiedi i diritti.</div>
+<div class="stage"><canvas id="scene" width="1920" height="1080" aria-label="Scenografia musicale 16:9"></canvas></div>
+<div class="panel">
+<div class="field"><label for="song">1. Scegli il tuo brano audio</label><input type="file" id="song" accept="audio/*"></div>
+<button id="play" disabled>▶ Riproduci</button>
+<button id="record" disabled>● Registra video</button>
+<button id="stop" class="alt" disabled>■ Ferma registrazione</button>
+</div>
+<div class="status" id="status" role="status">Seleziona un file audio per cominciare.</div>
+<p class="footer">Esportazione: MP4 dove supportato dal browser, altrimenti WebM. La durata segue il brano o il comando di arresto: nessun limite artificiale. La qualità e la registrazione audio dipendono dalle capacità del browser e del dispositivo.</p>
+<audio id="audio" preload="metadata" playsinline></audio>
+</div>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),canvas=$('scene'),ctx=canvas.getContext('2d',{alpha:false}),audio=$('audio');
+const play=$('play'),record=$('record'),stop=$('stop'),status=$('status');const w=1920,h=1080;
+let sourceUrl=null,ac=null,analyser=null,audioSource=null,output=null,recorder=null,recorded=[],recordMime='',filename='Digital-Studio';
+const say=(s)=>{status.textContent=s;};
+function draw(ts){
+ requestAnimationFrame(draw);
+ const t=ts/1000;let data=null;
+ if(analyser){data=new Uint8Array(analyser.frequencyBinCount);analyser.getByteFrequencyData(data);}
+ const g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#151223');g.addColorStop(.45,'#251a30');g.addColorStop(1,'#090f1b');
+ ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+ for(let i=0;i<11;i++){const v=Math.sin(t*.13+i)*.5+.5;ctx.beginPath();ctx.ellipse(w*(i%5)/4,h*(i%3)/2,260+v*180,150+v*120,0,0,Math.PI*2);ctx.fillStyle=i%2?'#a85f3022':'#8655b921';ctx.fill();}
+ const level=(data&&data.length)?data.reduce((a,b)=>a+b,0)/data.length/255:0;
+ ctx.strokeStyle='#e4aa7350';ctx.lineWidth=2;ctx.strokeRect(68,76,w-136,h-154);
+ ctx.textAlign='left';ctx.fillStyle='#f1d0ad';ctx.font='600 37px system-ui';ctx.fillText('FRANCO FICARA DIGITAL STUDIO',105,151);
+ ctx.textAlign='center';ctx.fillStyle='#ead5d0';ctx.font='700 82px system-ui';ctx.fillText('CINEMA LOUNGE',w/2,303);
+ ctx.font='400 29px system-ui';ctx.fillStyle='#b9a6c0';ctx.fillText('Music Visual Experience',w/2,357);
+ const n=90,space=13,barW=8,begin=w/2-(n*space)/2;
+ for(let i=0;i<n;i++){
+  const ix=data?Math.floor(i*data.length/n):0;
+  const strength=data?data[ix]/255:0.08+0.06*Math.sin(t*2+i*.35);
+  const value=Math.max(10,Math.pow(strength,.85)*290);
+  const gg=ctx.createLinearGradient(0,575-value,0,575+value);gg.addColorStop(0,'#e6ba82');gg.addColorStop(.6,'#d18779');gg.addColorStop(1,'#9266a4');ctx.fillStyle=gg;
+  ctx.fillRect(begin+i*space,585-value,barW,value*2);
+ }
+ ctx.beginPath();ctx.strokeStyle='#efb47f';ctx.lineWidth=4;
+ for(let x=0;x<w-230;x+=4){const y=820+Math.sin(x/37+t*3)*level*65+Math.sin(x/83-t*2)*level*55;if(x===0)ctx.moveTo(115+x,y);else ctx.lineTo(115+x,y);}
+ ctx.stroke();
+ ctx.textAlign='center';ctx.font='600 28px system-ui';ctx.fillStyle='#e4bf9d';ctx.fillText(filename.replace(/[_-]+/g,' ').slice(0,65),w/2,970);
+}
+requestAnimationFrame(draw);
+$('song').addEventListener('change',()=>{
+ const f=$('song').files&&$('song').files[0];if(!f)return;
+ if(sourceUrl)URL.revokeObjectURL(sourceUrl);
+ if(recorder&&recorder.state!=='inactive'){say('Ferma la registrazione prima di cambiare brano.');return;}
+ sourceUrl=URL.createObjectURL(f);audio.src=sourceUrl;filename=f.name.replace(/\.[^.]+$/,'')||'Digital-Studio';audio.load();
+ play.disabled=false;record.disabled=false;
+ say('Brano caricato: '+f.name+'. Puoi ascoltarlo o registrare un video.');
+});
+async function readyAudio(){
+ if(!ac){const C=window.AudioContext||window.webkitAudioContext;if(!C)throw new Error('Web Audio non supportato');
+ ac=new C();audioSource=ac.createMediaElementSource(audio);analyser=ac.createAnalyser();analyser.fftSize=1024;analyser.smoothingTimeConstant=.8;
+ output=ac.createMediaStreamDestination();audioSource.connect(analyser);analyser.connect(ac.destination);analyser.connect(output);}
+ if(ac.state==='suspended')await ac.resume();
+}
+play.addEventListener('click',async()=>{
+ try{await readyAudio();if(audio.paused){await audio.play();play.textContent='❚❚ Pausa';say('Riproduzione in corso.');}else{audio.pause();play.textContent='▶ Riproduci';say('Riproduzione in pausa.');}}
+ catch(e){say('Impossibile riprodurre: '+e.message);}
+});
+audio.addEventListener('ended',()=>{play.textContent='▶ Riproduci';if(recorder&&recorder.state==='recording')recorder.stop();});
+function finish(){
+ if(!recorded.length){say('Nessun video prodotto. Riprova con un brano supportato.');return;}
+ const blob=new Blob(recorded,{type:recordMime||'video/webm'});const uri=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=uri;a.download=(filename||'Digital-Studio')+(recordMime.startsWith('video/mp4')?'.mp4':'.webm');document.body.appendChild(a);a.click();a.remove();
+ say('Video pronto e scaricato ('+(blob.size/1048576).toFixed(1)+' MB).');setTimeout(()=>URL.revokeObjectURL(uri),60000);
+}
+record.addEventListener('click',async()=>{
+ try{
+  if(!sourceUrl)throw new Error('Seleziona un brano audio.');
+  if(!canvas.captureStream||!window.MediaRecorder)throw new Error('Registrazione non disponibile in questo browser.');
+  await readyAudio();
+  const video=canvas.captureStream(30);
+  const tracks=[...video.getVideoTracks(),...output.stream.getAudioTracks()];
+  const stream=new MediaStream(tracks);
+  const candidates=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+  recordMime=candidates.find(x=>MediaRecorder.isTypeSupported(x))||'';
+  recorder=new MediaRecorder(stream,recordMime?{mimeType:recordMime,videoBitsPerSecond:5000000}:undefined);
+  recordMime=recorder.mimeType||recordMime||'video/webm';recorded=[];
+  recorder.ondataavailable=e=>{if(e.data.size)recorded.push(e.data)};
+  recorder.onerror=()=>say('Errore durante la registrazione video.');
+  recorder.onstop=()=>{video.getTracks().forEach(t=>t.stop());stop.disabled=true;record.disabled=false;finish();};
+  audio.currentTime=0;recorder.start(1000);
+  try{await audio.play();}catch(e){recorder.stop();throw e;}
+  play.textContent='❚❚ Pausa';play.disabled=true;record.disabled=true;stop.disabled=false;say('Registrazione video in corso…');
+ }catch(e){say('Registrazione non avviata: '+e.message);record.disabled=false;stop.disabled=true;play.disabled=false;}
+});
+stop.addEventListener('click',()=>{
+ if(recorder&&recorder.state==='recording')recorder.stop();
+ audio.pause();play.textContent='▶ Riproduci';play.disabled=false;stop.disabled=true;
+});
+})();
+</script></body></html>
