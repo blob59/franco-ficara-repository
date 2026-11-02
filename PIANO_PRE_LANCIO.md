@@ -14,7 +14,7 @@ Nessun pulsante «Apri online» o «Scarica gratis» per il lancio ufficiale fin
 | Franco PC Cleaner | Windows / Python Tkinter | ZIP versione 3.4 nella conversazione di lavoro | Test Windows, duplicati, selezioni, quarantena/ripristino, errori e permessi, rimozione dei riferimenti a dati personali; documentare Python richiesto e dipendenze |
 | AntiTruffa | Web / Python FastAPI | Repository GitHub `blob59/antitruffa-clean` | Controllo privacy e dati inviati, dipendenze, analisi non infallibile, protezione da abusi, avvio/installazione e test del servizio |
 | MeteoScudo | Web / meteo | Sito di progetto menzionato, nessun archivio sorgente completo qui verificato | Recuperare il progetto esatto, controllare fonti e aggiornamento dati, avvertenze sugli avvisi e versioni deployabili |
-| Digital Studio | Creazione video Windows / HTML | Alcune versioni HTML in Library; progetto Windows e moduli locali da recuperare | Individuare la versione funzionante unica, raccogliere dipendenze e asset, verificare licenze musicali/media, provare rendering ed esportazione su Windows |
+| Digital Studio | Creazione video Windows / HTML | Pacchetto Windows completo `Franco-Ficara-Digital-Studio-Definitivo-Windows.zip` e Cinema Lounge V16 trovati e analizzati; rapporto `COLLAUDI/DIGITAL_STUDIO.md` | Test reali Windows e video esportato; verifica licenze, antivirus, spazio disco e distinzione dalla Cinema Lounge V16 |
 
 ### Controlli comuni obbligatori
 
