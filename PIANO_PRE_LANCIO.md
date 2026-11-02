@@ -4,7 +4,7 @@
 
 ## Regola di pubblicazione
 
-Nessun pulsante «Apri online» o «Scarica gratis» per il lancio ufficiale finché **tutti e cinque** non superano i controlli sotto. Evitare versioni vecchie, duplicati e collegamenti fittizi. Conservare una sola versione identificata per ogni programma, con archivio privato dei sorgenti e pubblicazione dei soli file necessari.
+**Aggiornamento 2 novembre 2026:** l'autore ha autorizzato esplicitamente l'apertura di versioni web di prova prima del lancio ufficiale. I pulsanti **Prova online** sono consentiti, purché gli utenti vedano chiaramente i limiti. Resta vietato definire definitive versioni non collaudate o abilitare download rischiosi. Evitare versioni vecchie, duplicati e collegamenti fittizi. Conservare una sola versione identificata per ogni programma, con archivio privato dei sorgenti e pubblicazione dei soli file necessari.
 
 ## Inventario dei cinque software e del portale Start — 2 novembre 2026
 
@@ -22,6 +22,17 @@ Nessun pulsante «Apri online» o «Scarica gratis» per il lancio ufficiale fin
 - Una scheda «Franco Start» compare nel catalogo, categoria **Portali**, con pulsante **Visita Start**. Non è un file ZIP da scaricare e non richiede una nuova distribuzione nel Repository.
 - La raggiungibilità dell'indirizzo non è stata verificata dai controlli automatici di questa sessione; va confermata nel browser prima dell'annuncio pubblico.
 - Non modificare il sito Start originale. Il piano di collaudo dei cinque software resta invariato.
+
+### Stato attuale del catalogo pubblico — verifica 2 novembre 2026
+
+- **Franco QR Studio:** pulsante **Prova QR Studio**, apre la versione web esistente. Il ZIP originale resta sul server, ma il download non è promosso nel catalogo mentre l'aggiornamento UTF-8 resta da distribuire.
+- **AntiTruffa:** pulsante **Prova AntiTruffa**, applicazione **locale nel browser** basata sull'interfaccia originale; non invia i testi al server, non controlla reputazione online e non abilita la segnalazione. Non è il backend FastAPI completo, ancora in collaudo.
+- **MeteoScudo:** pulsante **Apri MeteoScudo**, apre il sito esistente `https://meteo.francoficara.com/` senza copiarlo nel Repository.
+- **Digital Studio:** pulsante **Prova Studio Web**. Anteprima **ridotta e distinta** dal pacchetto Windows: visualizzatore audio con Canvas 16:9 e registrazione browser tramite MediaRecorder. Nel test di browser remoto ha prodotto un MP4 con audio. L'app Windows completa resta in collaudo.
+- **Franco Start:** pulsante **Visita Start** per `https://start.francoficara.com/`.
+- **Franco PC Cleaner:** nessun download pubblico, in attesa del collaudo su Windows delle funzioni di spostamento e cancellazione.
+
+**Verifica Cloudflare:** risposta HTTP 200 sui siti Start, MeteoScudo, Repository e sulle tre pagine di prova del Repository. Controllo browser del catalogo: sei schede, cinque pulsanti di apertura, PC Cleaner disabilitato, nessun errore JS. Le prove non sostituiscono i test di compatibilità su telefoni e PC diversi.
 
 ### Controlli comuni obbligatori
 
