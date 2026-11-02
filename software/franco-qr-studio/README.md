@@ -12,9 +12,13 @@ Franco QR Studio permette di creare QR code per siti web, email, testi, contatti
 - Possibilità di personalizzare colori, forma e logo centrale.
 - Nessun caricamento di fotografie, PDF o QR su un nostro archivio: per aprire una foto o un PDF occorre un link pubblico esterno.
 
-## Stato della distribuzione
+## Usa o scarica Franco QR Studio
 
-**Pacchetto da caricare su GitHub prima di abilitare il pulsante Scarica gratis nel catalogo.** Versione da pubblicare: `Franco_QR_Studio_PUBBLICO.zip` (edizione statica senza Cloudflare R2).
+- **Avvia online:** https://franco-ficara-repository.francoficara1.workers.dev/apps/franco-qr-studio/index.html
+- **Scarica ZIP:** https://franco-ficara-repository.francoficara1.workers.dev/Franco_QR_Studio_PUBBLICO.zip
+- **Catalogo:** https://franco-ficara-repository.francoficara1.workers.dev/
+
+La versione online è ricavata dal pacchetto ZIP pubblico già presente nel repository. Non è richiesto un account e non ci sono caricamenti di fotografie su server.
 
 Il pacchetto comprende HTML, CSS, JavaScript e avvertenze sulle licenze delle librerie di terze parti. Non è necessario installare programmi: estrarre l'archivio e aprire `index.html` con un browser moderno.
 
