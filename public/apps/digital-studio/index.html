@@ -103,7 +103,7 @@ const $=id=>document.getElementById(id);
 const canvas=$('scene'),ctx=canvas.getContext('2d',{alpha:false}),video=$('sourceVideo'),song=$('sourceAudio');
 const play=$('play'),record=$('record'),stop=$('stop'),status=$('status');
 const W=1920,H=1080;
-let videoUrl=null,photoUrl=null,musicUrl=null,photo=null,ac=null,mix=null,destination=null,analyser=null,vg=null,mg=null,recorder=null,recorded=[],recordMime='',isRecording=false,isStarting=false,filename='Digital-Studio',loadedVideoDuration=0,exportStart=0,exportEnd=0,raf=0;
+let videoUrl=null,photoUrl=null,musicUrl=null,photo=null,ac=null,mix=null,destination=null,analyser=null,vg=null,mg=null,recorder=null,recorded=[],recordMime='',isRecording=false,isStarting=false,filename='Digital-Studio',loadedVideoDuration=0,exportStart=0,exportEnd=0,raf=0,lastFrame=0;
 const mode=()=> $('mode').value;
 const say=s=>{status.textContent=s;};
 const pad=n=>String(Math.max(0,Math.floor(n))).padStart(2,'0');
@@ -122,7 +122,10 @@ function changeMode(){
  $('originalLabel').hidden=m!=='video';$('originalVolumeField').hidden=m!=='video';
  $('musicLabel').textContent=m==='video'?'3. Musica aggiuntiva (facoltativa)':'3. Carica un brano musicale';
  $('musicHelp').textContent=m==='video'?'Se carichi una musica aggiuntiva, verrà ripetuta fino alla fine del video.':'Per questa modalità è necessario selezionare una traccia audio.';
- resetPlayback();setButtons();
+ resetPlayback();
+ const sourceName=m==='video'?$('videoFile').files[0]?.name:m==='photo'?$('photoFile').files[0]?.name:$('musicFile').files[0]?.name;
+ filename=sourceName?sourceName.replace(/\.[^.]+$/,''):'Digital-Studio';
+ setButtons();
  if(m==='video')say(videoUrl?'Video pronto. Controlla il taglio e avvia un’anteprima.':'Seleziona un video MP4 o WebM dal tuo computer.');
  if(m==='photo')say(photo?'Foto pronta: scegli anche il brano musicale.':'Seleziona una fotografia e un brano musicale.');
  if(m==='music')say(musicUrl?'Brano pronto per il visualizzatore.':'Seleziona un brano musicale.');
@@ -206,9 +209,12 @@ function drawLounge(time,level,data){
  ctx.font='400 35px system-ui';ctx.fillStyle='#d2b5c3';ctx.fillText('Music Visual Experience',W/2,378);
  const n=70,barW=12,space=19;let start=(W-n*space)/2;for(let i=0;i<n;i++){const ix=data?Math.floor(i*data.length/n):0;const v=data?data[ix]/255:(.08+.06*Math.sin(time*2+i*.4));const h=Math.max(10,Math.pow(Math.max(0,v),.9)*340);ctx.fillStyle=i%2?'#edb583':'#b27692';ctx.fillRect(start+i*space,765-h,barW,h*2);}
 }
-function draw(){
+function draw(stamp){
  raf=requestAnimationFrame(draw);
- const m=mode(),time=performance.now()/1000;
+ const threshold=isRecording||(!video.paused||!song.paused)?33:100;
+ if(stamp-lastFrame<threshold)return;
+ lastFrame=stamp;
+ const m=mode(),time=stamp/1000;
  const data=analyser?new Uint8Array(analyser.frequencyBinCount):null;if(data)analyser.getByteFrequencyData(data);
  if(m==='video'&&video.readyState>=2&&video.videoWidth){
   ctx.fillStyle='#090b12';ctx.fillRect(0,0,W,H);drawCover(video,video.videoWidth,video.videoHeight);
@@ -222,7 +228,10 @@ function draw(){
  const duration=m==='video'?(exportEnd||loadedVideoDuration):song.duration;
  const current=m==='video'?video.currentTime:song.currentTime;
  $('timeInfo').textContent=clock(current)+' / '+clock(duration);
- if(isRecording&&m==='video'&&exportEnd&&video.currentTime>=exportEnd-.02)endRecording();
+ if(m==='video'&&exportEnd&&video.currentTime>=exportEnd-.02){
+  if(isRecording)endRecording();
+  else if(!video.paused){pauseMedia();say('Anteprima terminata al punto finale selezionato.');}
+ }
 }
 requestAnimationFrame(draw);
 function selectedSource(){
@@ -240,7 +249,13 @@ function pauseMedia(){video.pause();song.pause();play.textContent='▶ Anteprima
 play.addEventListener('click',async()=>{
  if(isRecording||isStarting)return;
  try{selectedSource();
-  if((mode()==='video'?video:song).paused){await startMedia(false);play.textContent='❚❚ Pausa';say('Anteprima in riproduzione.');}
+  if((mode()==='video'?video:song).paused){
+   if(mode()==='video'){
+    const bounds=getBounds();exportEnd=bounds.end;
+    if(video.currentTime<bounds.start||video.currentTime>=bounds.end-.02)video.currentTime=bounds.start;
+   }
+   await startMedia(false);play.textContent='❚❚ Pausa';say('Anteprima in riproduzione.');
+  }
   else{pauseMedia();say('Anteprima in pausa.');}
  }catch(e){pauseMedia();say('Anteprima non disponibile: '+e.message);}
 });
