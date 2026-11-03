@@ -28,3 +28,16 @@ Alcuni lettori QR interpretavano in modo errato le lettere accentate, perché il
 
 ### Regola di protezione del lancio
 Non pubblicare ancora nuove versioni e non annunciare il prodotto sui social. I quattro prodotti restanti devono superare i loro controlli.
+
+
+## Miglioria del 3 novembre 2026 — foto dal computer
+
+A seguito del test dell'autore è emerso che la scheda **Foto / Immagine** chiedeva soltanto una foto già online; la selezione di un file locale era nascosta in **Personalizza lo stile → Logo decorativo**. Ora la versione web rende disponibile una scelta foto dal computer **direttamente nella scheda Foto**.
+
+- Aggiunto `public/apps/franco-qr-studio/photo-local.js` senza cambiare l'archivio ZIP originale.
+- Introdotta pagina aggiornata `public/apps/franco-qr-studio/foto.html`, richiamata dal catalogo per evitare la versione precedente in cache.
+- La foto JPG/PNG/WebP viene scelta dal browser, mostrata in anteprima con nome e dimensioni; può essere usata come miniatura grafica centrale fino a 3 MiB, tramite il logo esistente.
+- La foto locale non viene trasmessa al server. **Non viene trasformata in un QR che apre il file da un altro telefono**: per tale funzione è necessario pubblicare la foto e incollare un URL accessibile, come chiarito dalle istruzioni nella schermata.
+- Test con Chromium sul sito pubblico: selettore foto, anteprima, trasferimento al logo, generazione QR e download PNG riusciti; nessun errore JavaScript rilevato.
+- **Decodifica QR con foto centrale testata:** lettore OpenCV ha recuperato l'URL di prova originale `https://francoficara.com/fotografia.jpg` da PNG 1024 × 1024.
+- L'archivio ZIP originale non è ancora stato aggiornato con la nuova interfaccia; il collegamento ne informa l'utente. Test smartphone reale ancora da fare.
