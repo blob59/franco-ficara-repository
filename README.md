@@ -7,7 +7,7 @@ https://franco-ficara-repository.francoficara1.workers.dev/
 
 ## Lancio web beta · 3 novembre 2026
 
-La vetrina presenta sei progetti:
+La vetrina presenta sei progetti utilizzabili e un settimo programma Windows in collaudo:
 
 - [Franco QR Studio](https://franco-ficara-repository.francoficara1.workers.dev/apps/franco-qr-studio/foto.html): generatore web di QR, con selezione di foto dal PC per la miniatura e download del pacchetto [ZIP 1.1](https://franco-ficara-repository.francoficara1.workers.dev/Franco_QR_Studio_1_1.zip).
 - [Franco PC Cleaner Web](https://franco-ficara-repository.francoficara1.workers.dev/apps/franco-pc-cleaner/): ricerca duplicati in sola lettura, report CSV.
@@ -15,10 +15,11 @@ La vetrina presenta sei progetti:
 - [Digital Studio Web](https://franco-ficara-repository.francoficara1.workers.dev/apps/digital-studio/): Video Lab beta: importa MP4/WebM, ritaglia intervalli, aggiunge musica e titoli ed esporta 16:9 WebM dal browser, dove supportato. Anche foto + MP3 e vecchio Cinema Lounge.
 - [MeteoScudo](https://meteo.francoficara.com/): portale web meteo.
 - [Franco Start](https://start.francoficara.com/): portale web di progetti.
+- [Franco Video Downloader 0.3 (in collaudo)](https://blob59.github.io/franco-ficara-repository/apps/franco-video-downloader/): applicazione per Windows 10/11; la 0.2 è stata provata dall'autore, mentre la 0.3 attende il collaudo sul PC reale. Download pubblico non attivo.
 
 [Guida d'uso e limitazioni](https://franco-ficara-repository.francoficara1.workers.dev/guida.html)
 
-**Le versioni Windows complete di PC Cleaner e Digital Studio e il backend completo di AntiTruffa rimangono in collaudo e non fanno parte di questo lancio.** Le valutazioni AntiTruffa non certificano la sicurezza di un contenuto.
+**Le versioni Windows complete di PC Cleaner e Digital Studio, il backend completo di AntiTruffa e il candidato Video Downloader 0.3 rimangono in collaudo e non fanno parte di questo lancio.** Le valutazioni AntiTruffa non certificano la sicurezza di un contenuto.
 
 ## Verifiche e note di pubblicazione
 
