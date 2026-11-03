@@ -1,121 +1,302 @@
 <!doctype html>
-<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Digital Studio — Laboratorio Web | Franco Ficara Digital Studio</title>
-<meta name="description" content="Anteprima gratuita di Digital Studio: visualizzazione musicale 16:9 e registrazione video dal browser.">
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#11101b">
+<meta name="description" content="Digital Studio Web: importa video MP4 e WebM, aggiungi musica o testo, ritaglia un intervallo ed esporta il montaggio 16:9. Beta gratuita.">
+<title>Digital Studio Web · Video Lab | Franco Ficara Digital Studio</title>
 <style>
-:root{font-family:Inter,system-ui,'Segoe UI',sans-serif;color:#f9f0e9;background:#0f0d17}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse 85% 90% at 50% 0,#372336 0,#14121b 63%,#0b1017 100%);min-height:100vh}
-.shell{max-width:1400px;margin:auto;padding:18px clamp(14px,3vw,36px) 32px}
-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:15px}
-h1{font-size:clamp(20px,2.6vw,34px);margin:0;letter-spacing:.015em}h1 span{color:#efbb84}.brand{font-size:11px;letter-spacing:.15em;color:#cab3af;margin-top:6px}
-a{color:#eab68a;text-decoration:none}.back{background:#241e2b;padding:9px 12px;border:1px solid #6b4657;border-radius:10px;font-size:13px}
-.info{background:#211d2b;border:1px solid #514250;color:#f6dbc2;padding:13px 16px;border-radius:12px;margin:2px 0 16px;line-height:1.55;font-size:13px}
-.stage{border:1px solid #75533d;border-radius:16px;overflow:hidden;box-shadow:0 25px 90px #0008;background:#0a1018;aspect-ratio:16/9}
+:root{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#f9f0e9;background:#0e0d16}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse 80% 60% at 60% 0,#3b293c 0,#171422 58%,#0e1018 100%)}
+.shell{max-width:1450px;margin:auto;padding:20px clamp(14px,3vw,36px) 48px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+h1{margin:0;letter-spacing:-.025em;font-size:clamp(22px,3vw,36px)}
+h1 span{color:#f3c18e}
+.brand{margin-top:5px;color:#bca9b8;font-size:11px;letter-spacing:.16em}
+a{color:#eac095;text-decoration:none}.back{padding:10px 14px;border:1px solid #67485c;background:#211c2b;border-radius:12px;font-size:12px}
+.banner{margin:18px 0;padding:14px 17px;border:1px solid #665166;background:#241e30;border-radius:13px;color:#e8d3cf;font-size:13px;line-height:1.65}
+.banner strong{color:#ffd29e}
+.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,0.8fr);gap:18px;align-items:start}
+.preview-wrap{min-width:0}
+.stage{aspect-ratio:16/9;border:1px solid #986950;background:#080912;border-radius:16px;overflow:hidden;box-shadow:0 24px 65px #0008}
 canvas{display:block;width:100%;height:100%}
-.panel{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;background:#1c1723;border:1px solid #5a4147;border-radius:16px;padding:16px;margin-top:17px}
-.field{display:grid;gap:7px;min-width:220px;flex:1}
-label{color:#e8cab4;font-size:12px;font-weight:650}
-input[type=file]{max-width:100%;color:#e0cad3;font-size:12px}
-button{border:1px solid #a87857;border-radius:10px;padding:11px 16px;background:linear-gradient(#d69b63,#ab6a52);color:#16101c;cursor:pointer;font-weight:750;min-height:42px}
-button.alt{background:#30283a;color:#e9d3ca;border-color:#665362}button:disabled{opacity:.42;cursor:not-allowed}
-.status{font-size:13px;color:#dbc4bb;margin-top:13px;min-height:20px}
-p.footer{font-size:12px;color:#9f93a6;line-height:1.65}
-@media(max-width:650px){.panel{gap:10px}.panel button{flex:1;min-width:120px}.stage{border-radius:9px}}
-</style></head><body>
-<div class="shell">
-<header><div><h1>Digital Studio <span>· Laboratorio Web</span></h1><div class="brand">FRANCO FICARA DIGITAL STUDIO</div></div><a class="back" href="/">← Tutti i progetti</a></header>
-<div class="info"><strong>ANTEPRIMA WEB SPERIMENTALE.</strong> Carica un brano musicale dal tuo dispositivo, avvia l'anteprima e registra un video musicale in <strong>16:9</strong>. I file rimangono nel browser. Questa è una versione ridotta, non il Digital Studio Windows completo. Per pubblicare video, usa soltanto musica e immagini per cui possiedi i diritti.</div>
-<div class="stage"><canvas id="scene" width="1920" height="1080" aria-label="Scenografia musicale 16:9"></canvas></div>
-<div class="panel">
-<div class="field"><label for="song">1. Scegli il tuo brano audio</label><input type="file" id="song" accept="audio/*"></div>
-<button id="play" disabled>▶ Riproduci</button>
-<button id="record" disabled>● Registra video</button>
-<button id="stop" class="alt" disabled>■ Ferma registrazione</button>
+.preview-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:11px 2px;color:#b8adbb;font-size:12px}
+.panel{background:#1e1928;border:1px solid #5c4453;border-radius:17px;padding:18px;display:grid;gap:16px}
+.panel h2{font-size:18px;letter-spacing:-.02em;margin:0}
+.field{display:grid;gap:7px}
+.field label,.legend{font-size:12px;color:#efd5bb;font-weight:750}
+.field small,.hint{font-size:11px;color:#bcafbb;line-height:1.6}
+input[type=file],input[type=text],input[type=number],select{width:100%;min-height:40px;border:1px solid #635363;border-radius:9px;background:#10121e;color:#f4e8ea;font:13px system-ui;padding:8px 11px}
+input[type=file]{padding:8px;font-size:11px}
+input[type=range]{width:100%;accent-color:#e0a976}
+input[type=checkbox]{accent-color:#e4ac7b}
+.twocol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.options{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:12px;color:#ddd0d9}
+.options label{display:flex;align-items:center;gap:7px}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+button{border:1px solid #dbab83;border-radius:11px;min-height:43px;padding:11px 14px;font:700 13px system-ui;background:linear-gradient(#edbc87,#c38461);color:#211620;cursor:pointer}
+button.secondary{background:#30283a;color:#f0dccc;border-color:#6d5666}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #eed7a1;outline-offset:2px}
+.status{margin-top:13px;background:#221d2a;border:1px solid #554255;padding:12px 14px;border-radius:11px;font-size:12px;min-height:44px;color:#efd2bd;line-height:1.5}
+.steps{color:#bfb1bf;font-size:12px;line-height:1.65;margin-top:17px}
+.steps strong{color:#f4ceb0}
+.footer{margin-top:22px;border-top:1px solid #544354;padding-top:16px;color:#ac9dab;font-size:12px;line-height:1.7}
+[hidden]{display:none!important}
+@media(max-width:950px){.layout{grid-template-columns:1fr}}
+@media(max-width:550px){.twocol{grid-template-columns:1fr}.controls>*{flex:1}.panel{padding:14px}.shell{padding:15px 13px 30px}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header><div><h1>Digital Studio <span>· Video Lab</span></h1><div class="brand">FRANCO FICARA DIGITAL STUDIO</div></div><a class="back" href="/">← Tutti i progetti</a></header>
+<div class="banner"><strong>BETA WEB — ORA ANCHE VIDEO.</strong> Puoi importare un <strong>video dal computer</strong>, ritagliarne un intervallo, aggiungere musica, scrivere un titolo ed esportare il risultato in 16:9. Puoi anche creare un video da una foto e un MP3. Tutto viene elaborato nel browser: nessun caricamento automatico dei file al server. Il programma Windows completo resta separato e in collaudo.</div>
+<div class="layout">
+<div class="preview-wrap">
+<div class="stage"><canvas id="scene" width="1920" height="1080" aria-label="Anteprima video 16:9"></canvas></div>
+<div class="preview-meta"><span id="sourceInfo">Nessun contenuto caricato</span><span id="timeInfo">00:00 / --:--</span></div>
+<div class="controls">
+<button id="play" disabled>▶ Anteprima</button>
+<button id="record" disabled>● Crea e scarica video</button>
+<button id="stop" class="secondary" disabled>■ Ferma e salva</button>
 </div>
-<div class="status" id="status" role="status">Seleziona un file audio per cominciare.</div>
-<p class="footer">Esportazione web: WebM (preferito per affidabilità), oppure MP4 sui browser che non supportano WebM. Per MP4 H.264/AAC più compatibili è previsto Digital Studio Windows, ancora in collaudo. La durata segue il brano o il comando di arresto: nessun limite artificiale. La qualità e la registrazione audio dipendono dalle capacità del browser e del dispositivo.</p>
-<audio id="audio" preload="metadata" playsinline></audio>
+<div class="status" id="status" role="status" aria-live="polite">Scegli una modalità e un file per iniziare.</div>
+<div class="steps"><strong>Come funziona:</strong> scegli «Video dal PC» e carica un MP4/WebM, oppure «Foto + musica» per creare un video da un'immagine. Aggiungi eventualmente un brano MP3 e un titolo. Premi <strong>Crea e scarica video</strong>: la registrazione procede durante la riproduzione, senza limite di durata artificiale, finché finisce il video/brano o la fermi.</div>
 </div>
+<section class="panel" aria-label="Opzioni di montaggio">
+<h2>Prepara il tuo video</h2>
+<div class="field"><label for="mode">1. Che cosa vuoi creare?</label>
+<select id="mode"><option value="video">Video dal PC (MP4 / WebM)</option><option value="photo">Foto + musica</option><option value="music">Visualizzatore musicale</option></select></div>
+<div class="field" id="videoField"><label for="videoFile">2. Carica il tuo filmato</label>
+<input id="videoFile" type="file" accept=".mp4,.webm,video/mp4,video/webm">
+<small>Il video viene letto localmente. MP4 e WebM dipendono dai codec supportati dal browser. Non sono garantiti MOV o tutti i file registrati da telefono.</small></div>
+<div class="field" id="photoField" hidden><label for="photoFile">2. Carica la fotografia</label>
+<input id="photoFile" type="file" accept="image/png,image/jpeg,image/webp">
+<small>La foto viene adattata alla cornice 16:9. Il brano determina la durata del video.</small></div>
+<div class="field"><label for="musicFile"><span id="musicLabel">3. Musica aggiuntiva (facoltativa)</span></label>
+<input id="musicFile" type="file" accept="audio/*">
+<small id="musicHelp">Puoi aggiungere un MP3 al filmato; se è più corto, si ripete fino alla fine del video.</small></div>
+<div class="twocol" id="cutFields">
+<div class="field"><label for="cutStart">Inizio clip (secondi)</label><input type="number" id="cutStart" min="0" step="0.1" value="0"></div>
+<div class="field"><label for="cutEnd">Fine clip (secondi)</label><input type="number" id="cutEnd" min="0" step="0.1" placeholder="Fine del video"></div>
+</div>
+<div class="field"><label for="titleText">Titolo da sovrapporre (facoltativo)</label>
+<input id="titleText" type="text" maxlength="60" placeholder="Es. Il mio nuovo progetto"></div>
+<div class="options"><label><input type="checkbox" id="titleOn" checked> Mostra il titolo</label><label id="originalLabel"><input type="checkbox" id="originalOn" checked> Mantieni audio originale</label></div>
+<div class="twocol">
+<div class="field" id="originalVolumeField"><label for="originalVolume">Volume originale</label><input id="originalVolume" type="range" min="0" max="100" value="100"></div>
+<div class="field"><label for="musicVolume">Volume musica aggiunta</label><input id="musicVolume" type="range" min="0" max="100" value="65"></div>
+</div>
+<div class="hint">Formato di uscita: WebM nei browser compatibili; MP4 soltanto quando il browser lo supporta realmente. Per montaggio multitraccia, transizioni e MP4 H.264/AAC più universali serve il programma completo o un editor dedicato.</div>
+<a href="music.html">Apri il vecchio laboratorio «Cinema Lounge» solo MP3 ↗</a>
+</section>
+</div>
+<p class="footer">© Franco Ficara Digital Studio · Anteprima sperimentale. 16:9 orizzontale 1920×1080, adattamento a riempimento senza bande nere: i video verticali o con proporzioni diverse vengono ritagliati ai bordi. L'esportazione registra in tempo reale e può richiedere risorse significative. Si consiglia un PC con Chrome/Edge aggiornato. Usa soltanto materiale audio/video di cui possiedi i diritti. Il servizio non effettua upload dei file selezionati.</p>
+<video id="sourceVideo" preload="auto" playsinline hidden></video>
+<audio id="sourceAudio" preload="auto" playsinline hidden></audio>
+</main>
 <script>
-(()=>{'use strict';
-const $=id=>document.getElementById(id),canvas=$('scene'),ctx=canvas.getContext('2d',{alpha:false}),audio=$('audio');
-const play=$('play'),record=$('record'),stop=$('stop'),status=$('status');const w=1920,h=1080;
-let sourceUrl=null,ac=null,analyser=null,audioSource=null,output=null,recorder=null,recorded=[],recordMime='',filename='Digital-Studio';
-const say=(s)=>{status.textContent=s;};
-function draw(ts){
- requestAnimationFrame(draw);
- const t=ts/1000;let data=null;
- if(analyser){data=new Uint8Array(analyser.frequencyBinCount);analyser.getByteFrequencyData(data);}
- const g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#151223');g.addColorStop(.45,'#251a30');g.addColorStop(1,'#090f1b');
- ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
- for(let i=0;i<11;i++){const v=Math.sin(t*.13+i)*.5+.5;ctx.beginPath();ctx.ellipse(w*(i%5)/4,h*(i%3)/2,260+v*180,150+v*120,0,0,Math.PI*2);ctx.fillStyle=i%2?'#a85f3022':'#8655b921';ctx.fill();}
- const level=(data&&data.length)?data.reduce((a,b)=>a+b,0)/data.length/255:0;
- ctx.strokeStyle='#e4aa7350';ctx.lineWidth=2;ctx.strokeRect(68,76,w-136,h-154);
- ctx.textAlign='left';ctx.fillStyle='#f1d0ad';ctx.font='600 37px system-ui';ctx.fillText('FRANCO FICARA DIGITAL STUDIO',105,151);
- ctx.textAlign='center';ctx.fillStyle='#ead5d0';ctx.font='700 82px system-ui';ctx.fillText('CINEMA LOUNGE',w/2,303);
- ctx.font='400 29px system-ui';ctx.fillStyle='#b9a6c0';ctx.fillText('Music Visual Experience',w/2,357);
- const n=90,space=13,barW=8,begin=w/2-(n*space)/2;
- for(let i=0;i<n;i++){
-  const ix=data?Math.floor(i*data.length/n):0;
-  const strength=data?data[ix]/255:0.08+0.06*Math.sin(t*2+i*.35);
-  const value=Math.max(10,Math.pow(strength,.85)*290);
-  const gg=ctx.createLinearGradient(0,575-value,0,575+value);gg.addColorStop(0,'#e6ba82');gg.addColorStop(.6,'#d18779');gg.addColorStop(1,'#9266a4');ctx.fillStyle=gg;
-  ctx.fillRect(begin+i*space,585-value,barW,value*2);
+(() => {
+'use strict';
+const $=id=>document.getElementById(id);
+const canvas=$('scene'),ctx=canvas.getContext('2d',{alpha:false}),video=$('sourceVideo'),song=$('sourceAudio');
+const play=$('play'),record=$('record'),stop=$('stop'),status=$('status');
+const W=1920,H=1080;
+let videoUrl=null,photoUrl=null,musicUrl=null,photo=null,ac=null,mix=null,destination=null,analyser=null,vg=null,mg=null,recorder=null,recorded=[],recordMime='',isRecording=false,isStarting=false,filename='Digital-Studio',loadedVideoDuration=0,exportStart=0,exportEnd=0,raf=0;
+const mode=()=> $('mode').value;
+const say=s=>{status.textContent=s;};
+const pad=n=>String(Math.max(0,Math.floor(n))).padStart(2,'0');
+const clock=n=> Number.isFinite(n)?pad(n/60)+':'+pad(n%60):'--:--';
+const active=()=> !play.disabled;
+function setButtons(){
+ const selected=mode()==='video'?!!videoUrl:mode()==='photo'?!!photo&&!!musicUrl:!!musicUrl;
+ const locked=isRecording||isStarting;
+ play.disabled=!selected||locked;record.disabled=!selected||locked;stop.disabled=!isRecording;
+ for(const id of ['mode','videoFile','photoFile','musicFile','cutStart','cutEnd']) $(id).disabled=locked;
+}
+function changeMode(){
+ if(isRecording||isStarting)return;
+ const m=mode();
+ $('videoField').hidden=m!=='video';$('photoField').hidden=m!=='photo';$('cutFields').hidden=m!=='video';
+ $('originalLabel').hidden=m!=='video';$('originalVolumeField').hidden=m!=='video';
+ $('musicLabel').textContent=m==='video'?'3. Musica aggiuntiva (facoltativa)':'3. Carica un brano musicale';
+ $('musicHelp').textContent=m==='video'?'Se carichi una musica aggiuntiva, verrà ripetuta fino alla fine del video.':'Per questa modalità è necessario selezionare una traccia audio.';
+ resetPlayback();setButtons();
+ if(m==='video')say(videoUrl?'Video pronto. Controlla il taglio e avvia un’anteprima.':'Seleziona un video MP4 o WebM dal tuo computer.');
+ if(m==='photo')say(photo?'Foto pronta: scegli anche il brano musicale.':'Seleziona una fotografia e un brano musicale.');
+ if(m==='music')say(musicUrl?'Brano pronto per il visualizzatore.':'Seleziona un brano musicale.');
+}
+function resetPlayback(){
+ video.pause();song.pause();song.loop=false;play.textContent='▶ Anteprima';
+ try{if(mode()==='video')video.currentTime=Number($('cutStart').value)||0;}catch{}
+}
+function clearFile(kind){
+ if(kind==='video'&&videoUrl){URL.revokeObjectURL(videoUrl);videoUrl=null;video.removeAttribute('src');video.load();loadedVideoDuration=0;}
+ if(kind==='photo'&&photoUrl){URL.revokeObjectURL(photoUrl);photoUrl=null;photo=null;}
+ if(kind==='music'&&musicUrl){URL.revokeObjectURL(musicUrl);musicUrl=null;song.removeAttribute('src');song.load();}
+}
+$('mode').addEventListener('change',changeMode);
+$('videoFile').addEventListener('change',()=>{
+ if(isRecording||isStarting)return;clearFile('video');const f=$('videoFile').files[0];
+ if(!f){setButtons();return;}
+ videoUrl=URL.createObjectURL(f);filename=f.name.replace(/\.[^.]+$/,'')||'Digital-Studio';
+ video.src=videoUrl;video.load();say('Caricamento filmato: '+f.name);setButtons();
+});
+video.addEventListener('loadedmetadata',()=>{
+ loadedVideoDuration=Number.isFinite(video.duration)?video.duration:0;
+ $('cutEnd').placeholder=loadedVideoDuration?('Fine: '+loadedVideoDuration.toFixed(1)+' s'):'Fine del video';
+ $('sourceInfo').textContent='Video: '+video.videoWidth+'×'+video.videoHeight+(loadedVideoDuration?' · '+clock(loadedVideoDuration):'');
+ say('Filmato caricato. Puoi scegliere un intervallo e creare il video.');setButtons();
+});
+video.addEventListener('error',()=>{
+ if(!videoUrl)return;
+ say('Il browser non riesce a leggere questo video. Prova un MP4 H.264 o WebM compatibile.');
+ if(!isRecording&&!isStarting){play.disabled=true;record.disabled=true;}
+});
+$('photoFile').addEventListener('change',()=>{
+ if(isRecording||isStarting)return;clearFile('photo');const f=$('photoFile').files[0];if(!f){setButtons();return;}
+ photoUrl=URL.createObjectURL(f);const img=new Image();
+ img.onload=()=>{if(photoUrl){photo=img;filename=f.name.replace(/\.[^.]+$/,'')||'Digital-Studio';say('Fotografia caricata: '+f.name);setButtons();}};
+ img.onerror=()=>say('Immagine non supportata dal browser.');
+ img.src=photoUrl;
+});
+$('musicFile').addEventListener('change',()=>{
+ if(isRecording||isStarting)return;clearFile('music');const f=$('musicFile').files[0];
+ if(!f){setButtons();return;}
+ musicUrl=URL.createObjectURL(f);song.src=musicUrl;song.load();
+ if(mode()!=='video')filename=f.name.replace(/\.[^.]+$/,'')||'Digital-Studio';
+ say('Musica caricata: '+f.name);setButtons();
+});
+song.addEventListener('error',()=>{if(musicUrl)say('Questo brano non è riproducibile dal browser.');});
+function applyLevels(){
+ if(vg)vg.gain.value=mode()==='video'&&$('originalOn').checked?Number($('originalVolume').value)/100:0;
+ if(mg)mg.gain.value=Number($('musicVolume').value)/100;
+}
+$('originalOn').addEventListener('change',applyLevels);
+$('originalVolume').addEventListener('input',applyLevels);
+$('musicVolume').addEventListener('input',applyLevels);
+async function audioReady(){
+ if(!ac){
+  const C=window.AudioContext||window.webkitAudioContext;if(!C)throw new Error('Il browser non supporta Web Audio.');
+  ac=new C();mix=ac.createGain();destination=ac.createMediaStreamDestination();analyser=ac.createAnalyser();analyser.fftSize=512;
+  const vs=ac.createMediaElementSource(video),ms=ac.createMediaElementSource(song);
+  vg=ac.createGain();mg=ac.createGain();vs.connect(vg);ms.connect(mg);vg.connect(mix);mg.connect(mix);
+  mix.connect(ac.destination);mix.connect(destination);mix.connect(analyser);
  }
- ctx.beginPath();ctx.strokeStyle='#efb47f';ctx.lineWidth=4;
- for(let x=0;x<w-230;x+=4){const y=820+Math.sin(x/37+t*3)*level*65+Math.sin(x/83-t*2)*level*55;if(x===0)ctx.moveTo(115+x,y);else ctx.lineTo(115+x,y);}
- ctx.stroke();
- ctx.textAlign='center';ctx.font='600 28px system-ui';ctx.fillStyle='#e4bf9d';ctx.fillText(filename.replace(/[_-]+/g,' ').slice(0,65),w/2,970);
+ if(ac.state==='suspended')await ac.resume();
+ applyLevels();
+}
+function getBounds(){
+ if(mode()!=='video')return {start:0,end:0};
+ const start=Number($('cutStart').value||0),raw=$('cutEnd').value.trim();
+ const end=raw===''?loadedVideoDuration:Number(raw);
+ if(!Number.isFinite(start)||start<0||!Number.isFinite(end)||end<=start||!loadedVideoDuration||start>=loadedVideoDuration||end>loadedVideoDuration+.1)throw new Error('Controlla inizio e fine: devono essere all’interno del video, con la fine dopo l’inizio.');
+ return {start,end:Math.min(end,loadedVideoDuration)};
+}
+function drawCover(media,mw,mh){
+ if(!(mw>0&&mh>0))return;
+ const scale=Math.max(W/mw,H/mh),dw=mw*scale,dh=mh*scale;
+ ctx.drawImage(media,(W-dw)/2,(H-dh)/2,dw,dh);
+}
+function drawLounge(time,level,data){
+ const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#20162a');g.addColorStop(.55,'#302035');g.addColorStop(1,'#101320');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ for(let i=0;i<9;i++){const r=300+120*Math.sin(time*.4+i);ctx.fillStyle=i%2?'#ad665e28':'#6652a52b';ctx.beginPath();ctx.ellipse((i%5)*W/4,((i*3)%5)*H/4,r,r*.63,0,0,Math.PI*2);ctx.fill();}
+ ctx.textAlign='center';ctx.fillStyle='#f4d1b5';ctx.font='800 84px system-ui';ctx.fillText('CINEMA LOUNGE',W/2,320);
+ ctx.font='400 35px system-ui';ctx.fillStyle='#d2b5c3';ctx.fillText('Music Visual Experience',W/2,378);
+ const n=70,barW=12,space=19;let start=(W-n*space)/2;for(let i=0;i<n;i++){const ix=data?Math.floor(i*data.length/n):0;const v=data?data[ix]/255:(.08+.06*Math.sin(time*2+i*.4));const h=Math.max(10,Math.pow(Math.max(0,v),.9)*340);ctx.fillStyle=i%2?'#edb583':'#b27692';ctx.fillRect(start+i*space,765-h,barW,h*2);}
+}
+function draw(){
+ raf=requestAnimationFrame(draw);
+ const m=mode(),time=performance.now()/1000;
+ const data=analyser?new Uint8Array(analyser.frequencyBinCount):null;if(data)analyser.getByteFrequencyData(data);
+ if(m==='video'&&video.readyState>=2&&video.videoWidth){
+  ctx.fillStyle='#090b12';ctx.fillRect(0,0,W,H);drawCover(video,video.videoWidth,video.videoHeight);
+ }else if(m==='photo'&&photo){ctx.fillStyle='#10101a';ctx.fillRect(0,0,W,H);drawCover(photo,photo.naturalWidth,photo.naturalHeight);}
+ else drawLounge(time,0,data);
+ if(m!=='music'){
+  const grd=ctx.createLinearGradient(0,H-290,0,H);grd.addColorStop(0,'#08060b00');grd.addColorStop(1,'#07050bcc');ctx.fillStyle=grd;ctx.fillRect(0,H-290,W,290);
+ }
+ const title=$('titleText').value.trim();
+ if($('titleOn').checked&&title){ctx.font='750 60px system-ui';ctx.textAlign='center';ctx.fillStyle='#0009';ctx.fillText(title.slice(0,60),W/2+3,H-116+3);ctx.fillStyle='#fff4dd';ctx.fillText(title.slice(0,60),W/2,H-116);}
+ const duration=m==='video'?(exportEnd||loadedVideoDuration):song.duration;
+ const current=m==='video'?video.currentTime:song.currentTime;
+ $('timeInfo').textContent=clock(current)+' / '+clock(duration);
+ if(isRecording&&m==='video'&&exportEnd&&video.currentTime>=exportEnd-.02)endRecording();
 }
 requestAnimationFrame(draw);
-$('song').addEventListener('change',()=>{
- const f=$('song').files&&$('song').files[0];if(!f)return;
- if(recorder&&recorder.state!=='inactive'){say('Ferma la registrazione prima di cambiare brano.');return;}
- if(sourceUrl)URL.revokeObjectURL(sourceUrl);
- sourceUrl=URL.createObjectURL(f);audio.src=sourceUrl;filename=f.name.replace(/\.[^.]+$/,'')||'Digital-Studio';audio.load();
- play.disabled=false;record.disabled=false;
- say('Brano caricato: '+f.name+'. Puoi ascoltarlo o registrare un video.');
-});
-async function readyAudio(){
- if(!ac){const C=window.AudioContext||window.webkitAudioContext;if(!C)throw new Error('Web Audio non supportato');
- ac=new C();audioSource=ac.createMediaElementSource(audio);analyser=ac.createAnalyser();analyser.fftSize=1024;analyser.smoothingTimeConstant=.8;
- output=ac.createMediaStreamDestination();audioSource.connect(analyser);analyser.connect(ac.destination);analyser.connect(output);}
- if(ac.state==='suspended')await ac.resume();
+function selectedSource(){
+ if(mode()==='video'&&(!videoUrl||!loadedVideoDuration))throw new Error('Carica un video compatibile e attendi l’anteprima.');
+ if(mode()==='photo'&&(!photo||!musicUrl))throw new Error('Servono una fotografia e un brano audio.');
+ if(mode()==='music'&&!musicUrl)throw new Error('Carica un brano audio.');
 }
+async function startMedia(reset){
+ const m=mode();await audioReady();
+ if(reset){video.pause();song.pause();if(m==='video'){const b=getBounds();video.currentTime=b.start;exportStart=b.start;exportEnd=b.end;}else{song.currentTime=0;exportEnd=0;}}
+ if(m==='video'){if(musicUrl){song.loop=true;await song.play();}await video.play();}
+ else{song.loop=false;await song.play();}
+}
+function pauseMedia(){video.pause();song.pause();play.textContent='▶ Anteprima';}
 play.addEventListener('click',async()=>{
- try{await readyAudio();if(audio.paused){await audio.play();play.textContent='❚❚ Pausa';say('Riproduzione in corso.');}else{audio.pause();play.textContent='▶ Riproduci';say('Riproduzione in pausa.');}}
- catch(e){say('Impossibile riprodurre: '+e.message);}
+ if(isRecording||isStarting)return;
+ try{selectedSource();
+  if((mode()==='video'?video:song).paused){await startMedia(false);play.textContent='❚❚ Pausa';say('Anteprima in riproduzione.');}
+  else{pauseMedia();say('Anteprima in pausa.');}
+ }catch(e){pauseMedia();say('Anteprima non disponibile: '+e.message);}
 });
-audio.addEventListener('ended',()=>{play.textContent='▶ Riproduci';if(recorder&&recorder.state==='recording')recorder.stop();});
+function stopMedia(){
+ pauseMedia();
+ if(isRecording&&recorder&&recorder.state!=='inactive'){try{recorder.stop();}catch(e){say('Errore durante l’arresto: '+e.message);}}
+}
+function endRecording(){
+ if(!isRecording)return;
+ isRecording=false;stop.disabled=true;pauseMedia();
+ if(recorder&&recorder.state==='recording')recorder.stop();
+}
+video.addEventListener('ended',()=>{if(isRecording)endRecording();else pauseMedia();});
+song.addEventListener('ended',()=>{if(mode()!=='video'){if(isRecording)endRecording();else pauseMedia();}});
 function finish(){
- if(!recorded.length){say('Nessun video prodotto. Riprova con un brano supportato.');return;}
- const blob=new Blob(recorded,{type:recordMime||'video/webm'});const uri=URL.createObjectURL(blob);
- const a=document.createElement('a');a.href=uri;a.download=(filename||'Digital-Studio')+(recordMime.startsWith('video/mp4')?'.mp4':'.webm');document.body.appendChild(a);a.click();a.remove();
- say('Video pronto e scaricato ('+(blob.size/1048576).toFixed(1)+' MB).');setTimeout(()=>URL.revokeObjectURL(uri),60000);
+ const mime=recordMime||'video/webm';
+ if(!recorded.length){say('Nessun file prodotto. Riprova con un file compatibile.');return;}
+ const blob=new Blob(recorded,{type:mime}),uri=URL.createObjectURL(blob);
+ const extension=mime.toLowerCase().startsWith('video/mp4')?'.mp4':'.webm';
+ const a=document.createElement('a');a.href=uri;a.download='Franco-Digital-Studio-'+(filename||'Video')+extension;
+ document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(uri),60000);
+ say('Video creato e scaricato ('+(blob.size/1048576).toFixed(1)+' MB). Formato '+extension.substring(1).toUpperCase()+'.');
 }
 record.addEventListener('click',async()=>{
+ if(isRecording||isStarting)return;
+ isStarting=true;setButtons();recorded=[];recorder=null;
  try{
-  if(!sourceUrl)throw new Error('Seleziona un brano audio.');
-  if(!canvas.captureStream||!window.MediaRecorder)throw new Error('Registrazione non disponibile in questo browser.');
-  await readyAudio();
-  const video=canvas.captureStream(30);
-  const tracks=[...video.getVideoTracks(),...output.stream.getAudioTracks()];
-  const stream=new MediaStream(tracks);
-  const candidates=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4'];
-  recordMime=candidates.find(x=>MediaRecorder.isTypeSupported(x))||'';
-  recorder=new MediaRecorder(stream,recordMime?{mimeType:recordMime,videoBitsPerSecond:5000000}:undefined);
-  recordMime=recorder.mimeType||recordMime||'video/webm';recorded=[];
-  recorder.ondataavailable=e=>{if(e.data.size)recorded.push(e.data)};
-  recorder.onerror=()=>say('Errore durante la registrazione video.');
-  recorder.onstop=()=>{video.getTracks().forEach(t=>t.stop());stop.disabled=true;record.disabled=false;play.disabled=false;play.textContent='▶ Riproduci';finish();};
-  audio.currentTime=0;recorder.start(1000);
-  try{await audio.play();}catch(e){recorder.stop();throw e;}
-  play.textContent='❚❚ Pausa';play.disabled=true;record.disabled=true;stop.disabled=false;say('Registrazione video in corso…');
- }catch(e){say('Registrazione non avviata: '+e.message);record.disabled=false;stop.disabled=true;play.disabled=false;}
+  selectedSource();
+  if(!canvas.captureStream||!window.MediaRecorder)throw new Error('Questo browser non supporta la registrazione video.');
+  if(mode()==='video')getBounds();
+  await audioReady();
+  const canvasStream=canvas.captureStream(30);
+  const stream=new MediaStream([...canvasStream.getVideoTracks(),...destination.stream.getAudioTracks()]);
+  const mimes=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4'];
+  const supported=mimes.find(t=>MediaRecorder.isTypeSupported(t));
+  recorder=new MediaRecorder(stream,supported?{mimeType:supported,videoBitsPerSecond:4500000}:undefined);
+  recordMime=recorder.mimeType||supported||'video/webm';
+  recorder.ondataavailable=e=>{if(e.data&&e.data.size)recorded.push(e.data);};
+  recorder.onerror=e=>say('Errore del registratore. Prova un altro file o browser.');
+  recorder.onstop=()=>{
+   canvasStream.getTracks().forEach(t=>t.stop());isRecording=false;isStarting=false;setButtons();finish();
+  };
+  await startMedia(true);
+  recorder.start(1000);isRecording=true;isStarting=false;setButtons();
+  say('Registrazione in corso: il video sarà salvato al termine. Puoi fermarla manualmente.');
+ }catch(e){
+  pauseMedia();isRecording=false;isStarting=false;
+  if(recorder&&recorder.state==='recording')recorder.stop();
+  setButtons();say('Impossibile avviare la registrazione: '+e.message);
+ }
 });
-stop.addEventListener('click',()=>{
- if(recorder&&recorder.state==='recording')recorder.stop();
- audio.pause();play.textContent='▶ Riproduci';play.disabled=false;stop.disabled=true;
-});
+stop.addEventListener('click',endRecording);
+$('cutStart').addEventListener('change',()=>{if(!isRecording&&!isStarting)try{video.currentTime=Number($('cutStart').value)||0;}catch{}});
+$('cutEnd').addEventListener('change',()=>{if(!isRecording&&!isStarting)try{getBounds();}catch(e){say(e.message);}});
+window.addEventListener('beforeunload',()=>{clearFile('video');clearFile('photo');clearFile('music');});
+changeMode();
 })();
-</script></body></html>
+</script>
+</body></html>
