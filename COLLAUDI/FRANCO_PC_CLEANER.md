@@ -58,3 +58,8 @@ Il cleaner non elimina automaticamente i file duplicati. Spostare file o cartell
 **Prova automatica browser:** caricati quattro file fittizi (due identici da 4 byte e due differenti); trovato esattamente un gruppo, una copia supplementare, 4 byte di spazio teorico; esportazione CSV eseguita; nessun errore JavaScript nel test. Corretto anche il controllo di annullamento per evitare interferenze con scansioni successive. Resta opportuna una prova manuale su Windows con una cartella di test e su smartphone per valutare le differenze dei selettori file.
 
 **Stato:** anteprima web pronta da usare a scopo dimostrativo; release desktop **ancora in collaudo**. Non equiparare l'una all'altra.
+
+
+## Riscontro dell'autore — 3 novembre 2026
+
+L'autore ha eseguito sul proprio computer il test di ricerca duplicati nella **versione web di sola lettura** e ha confermato che i duplicati sono stati trovati e che la funzione opera correttamente. Questo conferma il percorso principale di identificazione dei duplicati su un computer reale; **non costituisce ancora verifica dell'esportazione CSV, dell'annullamento né del programma Windows 3.5**.
