@@ -11,7 +11,7 @@ Il lancio pubblico riguarda un catalogo di **6 progetti accessibili**: 4 antepri
 | Franco QR Studio | Anteprima web + ZIP 1.1 | La miniatura foto locale è decorativa; per aprire la foto dalla scansione occorre un URL accessibile. |
 | Franco PC Cleaner | Demo web, sola lettura | Confronta file duplicati, esporta CSV; non cancella e non sposta file. Nessuna release Windows. |
 | AntiTruffa | Demo euristica locale | Nessuna verifica reputazione URL in tempo reale né segnalazione server; non certifica la sicurezza dei messaggi. |
-| Digital Studio Web | Demo web | Registrazione 16:9 con audio, formato WebM se supportato; non è la versione Windows completa. |
+| Digital Studio Web | Demo web | Video Lab beta con importazione MP4/WebM, ritaglio, titolo e musica, oppure foto + MP3. Esporta WebM 16:9 nei browser compatibili; non è un editor multitraccia né il programma Windows completo. |
 | MeteoScudo | Collegamento a portale web esterno | Avvisi meteo da verificare con fonti istituzionali. |
 | Franco Start | Collegamento a portale web esterno | Non è un programma da scaricare. |
 
