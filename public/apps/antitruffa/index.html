@@ -693,7 +693,7 @@
         <a class="btn-ghost" href="#analizza">Analizza</a>
         <a class="btn-ghost" href="#consigli">Consigli</a>
         <a class="btn-ghost" href="#faq">FAQ</a>
-        <a class="btn" href="#segnala">Segnala truffa</a>
+        <a class="btn" href="#segnala">Segnalazioni in collaudo</a>
       </nav>
     </div>
   </header>
@@ -746,11 +746,11 @@
           </div>
           <div class="stats-card">
             <div class="stat-number">3</div>
-            <div class="stat-label">Ricevi un esito chiaro: sicuro, attenzione o pericolo</div>
+            <div class="stat-label">Ricevi una stima indicativa: pochi indizi, attenzione o pericolo</div>
           </div>
           <div class="stats-card">
             <div class="stat-number">4</div>
-            <div class="stat-label">Puoi anche segnalare il contenuto per arricchire il database</div>
+            <div class="stat-label">La versione di prova non invia testi e non raccoglie segnalazioni</div>
           </div>
         </div>
       </div>
@@ -825,7 +825,7 @@
               <div class="explain-box">
                 <h5 class="box-title">🧠 Spiegazione semplice</h5>
                 <div class="result-text" id="simpleExplanation">
-                  Qui comparirà una spiegazione breve e chiara: se il contenuto sembra sicuro, dubbio o pericoloso.
+                  Qui comparirà una spiegazione breve e chiara dei segnali di rischio rilevati.
                 </div>
               </div>
 
@@ -1086,7 +1086,7 @@
         badgeText = '🟡 Attenzione';
         headline = 'Contenuto dubbio';
         summary = 'Sono presenti alcuni elementi da verificare meglio.';
-        if (!explanation) explanation = 'Il contenuto non appare chiaramente fraudolento, ma contiene aspetti sospetti che meritano controllo.';
+        if (!explanation) explanation = 'Il contenuto mostra indicatori di rischio che richiedono attenzione. Anche senza certezza non condividere dati sensibili.';
         if (!advice.length) advice = [
           'Verifica mittente, dominio o numero con una fonte ufficiale.',
           'Evita di cliccare o rispondere finché non hai controllato.',
@@ -1219,6 +1219,18 @@
         }
       }
 
+      // Le richieste di credenziali, soprattutto associate a minacce o urgenza,
+      // non devono essere declassate a semplice "Attenzione" dal punteggio base.
+      const secretRequestMatch = lower.match(/\b(?:inserisc\w*|inserir\w*|digit\w*|fornisc\w*|comunic\w*|invi\w*|conferm\w*|mand\w*)\b[^.!?\n]{0,100}\b(?:password|otp|pin|codic\w*|credenzial\w*)\b/);
+      const secretRequested = !!secretRequestMatch && !/\b(?:non|mai)\s+$/.test(lower.slice(Math.max(0,secretRequestMatch.index-12),secretRequestMatch.index));
+      const pressure = /\b(?:bloccat\w*|bloccher\w*|sospes\w*|sospension\w*|urgent\w*|immediat\w*|subito|entro oggi|scadenz\w*)\b/.test(lower);
+      if (secretRequested) {
+        score = Math.max(score, pressure ? 90 : 80);
+        signals.unshift('Richiesta di password, PIN o codici OTP: non comunicarli.');
+        if (pressure) signals.unshift('Richiesta di credenziali associata a minaccia, blocco o urgenza.');
+        advice.push('Non comunicare password, PIN o codici OTP, neppure se il messaggio sembra provenire dalla banca.');
+        advice.push('Contatta la banca o il servizio digitando l’indirizzo ufficiale, non usando il link nel messaggio.');
+      }
       score = Math.max(0, Math.min(100, score));
 
       if (score >= 70) {
