@@ -63,3 +63,8 @@ Il cleaner non elimina automaticamente i file duplicati. Spostare file o cartell
 ## Riscontro dell'autore — 3 novembre 2026
 
 L'autore ha eseguito sul proprio computer il test di ricerca duplicati nella **versione web di sola lettura** e ha confermato che i duplicati sono stati trovati e che la funzione opera correttamente. Questo conferma il percorso principale di identificazione dei duplicati su un computer reale; **non costituisce ancora verifica dell'esportazione CSV, dell'annullamento né del programma Windows 3.5**.
+
+
+### Verifica esportazione (3 novembre 2026)
+
+L'autore ha confermato anche che il pulsante **«Esporta report CSV»** genera e scarica il file previsto sul proprio computer. Il file non è stato ispezionato direttamente in questa conversazione, per cui la correttezza del suo contenuto in Excel resta distinta dal solo download.
