@@ -52,4 +52,6 @@
 - Download grandi: preferibilmente release versionate su GitHub, dopo controllo.
 - Sorgenti non ancora pubblicabili: NON depositare nel repository pubblico.
 
-**Stato:** preparazione e collaudo. Nessun annuncio social prima dell'approvazione finale dei cinque programmi.
+**Stato aggiornato al 3 novembre 2026:** l'autore ha richiesto di procedere al lancio pubblico delle funzioni già funzionanti. Si procede con il **lancio web beta**, NON con la distribuzione definitiva dei cinque software completi. QR Studio 1.1 è disponibile anche in ZIP; PC Cleaner e AntiTruffa sono demo browser locali; Digital Studio Web esporta WebM con audio; MeteoScudo e Franco Start sono collegamenti a portali esterni. Sono disponibili la guida `public/guida.html` e il registro `LANCIO_WEB_BETA_2026-11-03.md`.
+
+**Restano esclusi dal lancio:** PC Cleaner Windows con funzioni di eliminazione e ripristino, AntiTruffa con backend, Digital Studio Windows completo. Ulteriori annunci su social network richiedono pubblicazione effettiva nel canale selezionato.
