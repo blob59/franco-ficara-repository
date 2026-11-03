@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101928">
+<meta name="description" content="Franco PC Cleaner: anteprima web sicura per individuare duplicati senza modificare i file.">
+<title>Franco PC Cleaner — Scanner Web di prova</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#f0f5fa;background:#101827}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 10% 0,#1d3650,transparent 42%),radial-gradient(circle at 90% 10%,#25314a,transparent 44%),#101827}
+main{max-width:1120px;margin:auto;padding:22px clamp(15px,3vw,36px) 50px}
+header{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}.logo{display:grid;place-items:center;width:53px;height:53px;border:1px solid #62b3c7;border-radius:16px;background:#173847;color:#92e3e5;font-size:28px}
+h1{font-size:clamp(23px,3vw,37px);letter-spacing:-.04em;margin:0}.brand small{font-size:11px;letter-spacing:.15em;color:#a4bbc9}
+a{color:#bde9f2;text-decoration:none}.back{padding:11px 14px;border:1px solid #3f5d71;border-radius:12px;background:#1c3141;font-size:13px}
+.lead{margin-top:27px}.eyebrow{font-size:12px;color:#75d8cd;font-weight:750;letter-spacing:.12em}h2{font-size:clamp(27px,4vw,47px);letter-spacing:-.05em;line-height:1.12;margin:9px 0 12px}.lead p{color:#b9cad6;max-width:780px;line-height:1.7;margin:0}
+.notice{padding:14px 17px;background:#1e293d;border:1px solid #4c6080;border-radius:14px;margin:20px 0;color:#e7edf6;font-size:13px;line-height:1.65}
+.notice strong{color:#ffcf86}
+.panel{background:#162637;border:1px solid #355368;border-radius:20px;padding:clamp(16px,2.6vw,26px);box-shadow:0 26px 65px #080e1866;margin-top:17px}
+.panel h3{font-size:20px;letter-spacing:-.02em;margin:0 0 10px}.muted{color:#adc0ce;font-size:13px;line-height:1.65}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.file-label,button{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 17px;border-radius:11px;min-height:44px;font:700 13px system-ui;cursor:pointer;transition:background .16s}
+.file-label,.primary{background:#9ae1de;color:#102332;border:1px solid #9ae1de}.secondary{background:#203a4a;color:#e5f5fc;border:1px solid #4e7688}.danger{color:#ffe1c8;background:#412f3b;border:1px solid #785366}
+.file-label:hover,.primary:hover{background:#c4fbf5}.secondary:hover{background:#2c5061}
+button:disabled{opacity:.48;cursor:not-allowed}input[type=file]{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+input[type=file]:focus-visible + span{outline:3px solid #fff}button:focus-visible,.file-label:focus-within,.back:focus-visible{outline:3px solid #b5f8e4;outline-offset:3px}
+#selection{margin-top:14px;color:#dceaf2;font-size:13px}
+.progress{margin-top:13px;display:none}.progress[aria-hidden=false]{display:block}.bar{height:9px;border-radius:20px;background:#304355;overflow:hidden;margin-top:9px}
+.bar i{display:block;height:100%;width:0;background:#8bddd2;transition:width .2s}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}
+.metric{background:#172a3b;border:1px solid #355267;border-radius:15px;padding:15px}.metric strong{display:block;font-size:clamp(22px,3vw,30px);font-variant-numeric:tabular-nums}.metric small{font-size:12px;color:#aac2d0}
+.empty{background:#122332;border:1px dashed #416174;color:#b7cad5;padding:27px 20px;border-radius:13px;text-align:center;line-height:1.65}
+.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:550px}th,td{text-align:left;padding:13px 10px;border-bottom:1px solid #314958;font-size:13px;vertical-align:top}th{color:#8edcd9;font-size:12px}td small{color:#9eb3c1;display:block;margin-top:4px;word-break:break-all}.group-title{padding:12px 4px 5px;color:#a6d8e2;font-size:13px;font-weight:750}
+footer{font-size:12px;color:#849faf;margin-top:23px;line-height:1.6}
+@media(max-width:650px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.controls>*{flex:1}.brand small{letter-spacing:.05em}}
+</style>
+</head>
+<body><main>
+<header><div class="brand"><div class="logo" aria-hidden="true">◈</div><div><h1>Franco PC Cleaner</h1><small>FRANCO FICARA DIGITAL STUDIO</small></div></div><a class="back" href="/">← Tutti i progetti</a></header>
+<section class="lead"><div class="eyebrow">ANTEPRIMA WEB · SOLO LETTURA</div><h2>Scopri i duplicati.<br>Decidi tu cosa fare.</h2>
+<p>Seleziona una cartella o alcuni file e confrontali per individuare copie identiche. Il confronto avviene nel tuo browser: i file non vengono caricati su un server e non viene cambiato nulla sul computer.</p></section>
+<div class="notice"><strong>Attenzione:</strong> questa è un'anteprima web limitata alla ricerca dei duplicati, <strong>non</strong> Franco PC Cleaner per Windows 3.5. Non sposta, non elimina e non mette file in quarantena. Il programma Windows completo è ancora in collaudo.</div>
+<section class="panel" aria-labelledby="choose-title"><h3 id="choose-title">1. Scegli cosa controllare</h3>
+<p class="muted">Per trovare duplicati in cartelle diverse, seleziona una cartella che le contenga entrambe. Alcuni browser non consentono di scegliere cartelle: in quel caso usa «Scegli file».</p>
+<div class="controls">
+<label class="file-label"><input id="folder" type="file" webkitdirectory directory multiple><span>▣ Scegli una cartella</span></label>
+<label class="file-label"><input id="files" type="file" multiple><span>▤ Scegli file</span></label>
+<button id="start" class="primary" disabled>⌕ Cerca duplicati</button>
+<button id="cancel" class="danger" disabled>Annulla</button>
+</div>
+<div id="selection" aria-live="polite">Nessun file selezionato.</div>
+<div id="progress" class="progress" aria-hidden="true"><div class="muted" id="status" role="status" aria-live="polite">Pronto.</div><div class="bar"><i id="fill"></i></div></div>
+</section>
+<section class="metrics" aria-label="Statistiche"><div class="metric"><strong id="count">0</strong><small>File selezionati</small></div><div class="metric"><strong id="groups">0</strong><small>Gruppi identici</small></div><div class="metric"><strong id="copies">0</strong><small>Copie in più</small></div><div class="metric"><strong id="bytes">0 B</strong><small>Spazio occupato dalle copie</small></div></section>
+<section class="panel" aria-labelledby="results-title"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px"><h3 id="results-title">2. Risultati</h3><button id="csv" class="secondary" disabled>↓ Esporta report CSV</button></div>
+<p class="muted">Un gruppo compare qui soltanto se i contenuti dei file sono stati confrontati integralmente. Le copie rilevate <strong>non</strong> vengono cancellate.</p>
+<div id="results" class="empty">Seleziona una cartella e premi «Cerca duplicati». I risultati compariranno qui.</div>
+</section>
+<footer>© Franco Ficara Digital Studio · Beta web di sola lettura. La stima di spazio non indica spazio già liberato. Non eliminare file di sistema o file usati da progetti prima di averli verificati.</footer>
+</main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+let chosen=[],run=0,summary=[],busy=false;
+const fmt=n=>{if(!n)return '0 B';const unit=['B','KB','MB','GB','TB'];let i=0;while(n>=1024&&i<unit.length-1){n/=1024;i++;}return (i?n.toFixed(n<10?2:1):String(n))+' '+unit[i];};
+const nice=f=>f.webkitRelativePath||f.name;
+const setText=(id,t)=>$(id).textContent=t;
+function select(e){if(busy)return;chosen=Array.from(e.target.files||[]);$('folder'===e.target.id?'files':'folder').value='';
+summary=[];setText('selection',chosen.length?chosen.length.toLocaleString('it')+' file selezionati, '+fmt(chosen.reduce((a,f)=>a+f.size,0))+'.':'Nessun file selezionato.');
+setText('count',chosen.length.toLocaleString('it'));setText('groups','0');setText('copies','0');setText('bytes','0 B');$('csv').disabled=true;$('start').disabled=chosen.length===0;$('results').replaceChildren();$('results').className='empty';$('results').textContent='Pronto per il confronto: premi «Cerca duplicati».';
+$('progress').setAttribute('aria-hidden','true');}
+$('folder').addEventListener('change',select);$('files').addEventListener('change',select);
+function progress(current,total,msg){$('progress').setAttribute('aria-hidden','false');setText('status',msg);$('fill').style.width=(total?Math.min(100,Math.round(100*current/total)):0)+'%';}
+async function same(a,b,token){
+ if(a.size!==b.size)return false;
+ const block=1024*1024;
+ for(let i=0;i<a.size;i+=block){if(run!==token)throw new Error('Analisi annullata');
+  const [x,y]=await Promise.all([a.slice(i,i+block).arrayBuffer(),b.slice(i,i+block).arrayBuffer()]);
+  const aa=new Uint8Array(x),bb=new Uint8Array(y);if(aa.length!==bb.length)return false;
+  for(let j=0;j<aa.length;j++)if(aa[j]!==bb[j])return false;
+  if(i%(8*block)===0)await new Promise(resolve=>setTimeout(resolve,0));
+ }
+ return true;
+}
+function addRow(body,group,id,f){const row=document.createElement('tr');const a=document.createElement('td'),b=document.createElement('td'),c=document.createElement('td');a.textContent=id===0?'Originale di riferimento':'Copia identica';a.style.color=id===0?'#bad7d8':'#f5c58f';b.textContent=f.name;const path=document.createElement('small');path.textContent=nice(f);b.append(path);c.textContent=fmt(f.size);row.append(a,b,c);body.append(row);}
+function render(groups){const output=$('results');output.replaceChildren();output.className='';if(!groups.length){output.className='empty';output.textContent='Nessuna copia identica trovata tra i file selezionati.';return;}
+for(let i=0;i<groups.length;i++){const gr=groups[i];const title=document.createElement('div');title.className='group-title';title.textContent='Gruppo '+(i+1)+' · '+gr.length+' file identici · '+fmt(gr[0].size)+' ciascuno';output.append(title);const wrap=document.createElement('div');wrap.className='table-wrap';const table=document.createElement('table');const th=document.createElement('thead');const head=document.createElement('tr');for(const label of ['Tipo','Nome e percorso','Dimensione']){const cell=document.createElement('th');cell.textContent=label;head.append(cell);}th.append(head);table.append(th);const body=document.createElement('tbody');gr.forEach((f,id)=>addRow(body,gr,id,f));table.append(body);wrap.append(table);output.append(wrap);}}
+function end(){busy=false;$('start').disabled=!chosen.length;$('cancel').disabled=true;$('folder').disabled=false;$('files').disabled=false;}
+$('start').addEventListener('click',async()=>{
+ if(busy||!chosen.length)return;busy=true;const token=++run;$('start').disabled=true;$('cancel').disabled=false;$('folder').disabled=true;$('files').disabled=true;$('csv').disabled=true;
+ const buckets=new Map();for(const f of chosen){if(!buckets.has(f.size))buckets.set(f.size,[]);buckets.get(f.size).push(f);}
+ const candidates=[...buckets.values()].filter(a=>a.length>1);
+ const total=candidates.reduce((a,g)=>a+g.length,0);let examined=0;const found=[];
+ try{progress(0,total||1,'Analisi in corso: confronto completo dei contenuti…');
+ for(const bucket of candidates){const exact=[];
+  for(const file of bucket){if(run!==token)throw new Error('Analisi annullata');
+   let matched=false;
+   for(const g of exact){if(await same(file,g[0],token)){g.push(file);matched=true;break;}}
+   if(!matched)exact.push([file]);
+   examined++;progress(examined,total,'Confrontati '+examined+' di '+total+' file con dimensioni compatibili.');
+   await new Promise(resolve=>setTimeout(resolve,0));
+  }
+  found.push(...exact.filter(g=>g.length>1));
+ }
+ if(run!==token)throw new Error('Analisi annullata');
+ summary=found;render(found);
+ const copies=found.reduce((n,g)=>n+g.length-1,0),bytes=found.reduce((n,g)=>n+(g.length-1)*g[0].size,0);
+ setText('groups',found.length.toLocaleString('it'));setText('copies',copies.toLocaleString('it'));setText('bytes',fmt(bytes));
+ $('csv').disabled=!found.length;progress(1,1,'Analisi terminata. Nessun file è stato modificato.');
+ }catch(error){summary=[];progress(1,1,error&&error.message==='Analisi annullata'?'Analisi annullata, nessun file modificato.':'Impossibile completare: '+(error&&error.message||'errore'));if(error&&error.message!=='Analisi annullata')console.error(error);}
+ finally{if(run===token||!busy)end();else end();}
+});
+$('cancel').addEventListener('click',()=>{run++;end();summary=[];$('csv').disabled=true;progress(1,1,'Analisi annullata. Nessun file è stato modificato.');});
+function cell(value){let x=String(value==null?'':value);if(/^[=+\-@\t\r]/.test(x))x="'"+x;return '"'+x.replace(/"/g,'""')+'"';}
+$('csv').addEventListener('click',()=>{if(!summary.length)return;const lines=[['Gruppo','Tipo','Nome','Percorso','Dimensione byte'].map(cell).join(',')];summary.forEach((gr,i)=>gr.forEach((f,j)=>lines.push([i+1,j===0?'Riferimento':'Copia',f.name,nice(f),f.size].map(cell).join(','))));const blob=new Blob(['\uFEFF',lines.join('\r\n')],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='Franco_PC_Cleaner_Report_Duplicati.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),15000);});
+})();
+</script></body></html>
