@@ -30,7 +30,7 @@
 - **MeteoScudo:** pulsante **Apri MeteoScudo**, apre il sito esistente `https://meteo.francoficara.com/` senza copiarlo nel Repository.
 - **Digital Studio:** pulsante **Prova Studio Web**. Anteprima **ridotta e distinta** dal pacchetto Windows: visualizzatore audio con Canvas 16:9 e registrazione browser tramite MediaRecorder. Nel test di browser remoto ha prodotto un MP4 con audio. L'app Windows completa resta in collaudo.
 - **Franco Start:** pulsante **Visita Start** per `https://start.francoficara.com/`.
-- **Franco PC Cleaner:** nessun download pubblico, in attesa del collaudo su Windows delle funzioni di spostamento e cancellazione.
+- **Franco PC Cleaner:** pulsante **Prova PC Cleaner** attivo e verificato sul sito pubblico; anteprima web separata di sola lettura (ricerca duplicati per contenuto e report CSV, nessuna cancellazione). **Nessun download della versione desktop** finché non è collaudata su Windows.
 
 **Verifica Cloudflare:** risposta HTTP 200 sui siti Start, MeteoScudo, Repository e sulle tre pagine di prova del Repository. Controllo browser del catalogo: sei schede, cinque pulsanti di apertura, PC Cleaner disabilitato, nessun errore JS. Le prove non sostituiscono i test di compatibilità su telefoni e PC diversi.
 
