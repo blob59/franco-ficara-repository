@@ -107,8 +107,8 @@ $('start').addEventListener('click',async()=>{
  const copies=found.reduce((n,g)=>n+g.length-1,0),bytes=found.reduce((n,g)=>n+(g.length-1)*g[0].size,0);
  setText('groups',found.length.toLocaleString('it'));setText('copies',copies.toLocaleString('it'));setText('bytes',fmt(bytes));
  $('csv').disabled=!found.length;progress(1,1,'Analisi terminata. Nessun file è stato modificato.');
- }catch(error){summary=[];progress(1,1,error&&error.message==='Analisi annullata'?'Analisi annullata, nessun file modificato.':'Impossibile completare: '+(error&&error.message||'errore'));if(error&&error.message!=='Analisi annullata')console.error(error);}
- finally{if(run===token||!busy)end();else end();}
+ }catch(error){if(run===token){summary=[];progress(1,1,error&&error.message==='Analisi annullata'?'Analisi annullata, nessun file modificato.':'Impossibile completare: '+(error&&error.message||'errore'));if(error&&error.message!=='Analisi annullata')console.error(error);}}
+ finally{if(run===token)end();}
 });
 $('cancel').addEventListener('click',()=>{run++;end();summary=[];$('csv').disabled=true;progress(1,1,'Analisi annullata. Nessun file è stato modificato.');});
 function cell(value){let x=String(value==null?'':value);if(/^[=+\-@\t\r]/.test(x))x="'"+x;return '"'+x.replace(/"/g,'""')+'"';}
