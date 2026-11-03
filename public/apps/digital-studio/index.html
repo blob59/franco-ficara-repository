@@ -33,7 +33,7 @@ p.footer{font-size:12px;color:#9f93a6;line-height:1.65}
 <button id="stop" class="alt" disabled>■ Ferma registrazione</button>
 </div>
 <div class="status" id="status" role="status">Seleziona un file audio per cominciare.</div>
-<p class="footer">Esportazione: MP4 dove supportato dal browser, altrimenti WebM. La durata segue il brano o il comando di arresto: nessun limite artificiale. La qualità e la registrazione audio dipendono dalle capacità del browser e del dispositivo.</p>
+<p class="footer">Esportazione web: WebM (preferito per affidabilità), oppure MP4 sui browser che non supportano WebM. Per MP4 H.264/AAC più compatibili è previsto Digital Studio Windows, ancora in collaudo. La durata segue il brano o il comando di arresto: nessun limite artificiale. La qualità e la registrazione audio dipendono dalle capacità del browser e del dispositivo.</p>
 <audio id="audio" preload="metadata" playsinline></audio>
 </div>
 <script>
@@ -70,8 +70,8 @@ function draw(ts){
 requestAnimationFrame(draw);
 $('song').addEventListener('change',()=>{
  const f=$('song').files&&$('song').files[0];if(!f)return;
- if(sourceUrl)URL.revokeObjectURL(sourceUrl);
  if(recorder&&recorder.state!=='inactive'){say('Ferma la registrazione prima di cambiare brano.');return;}
+ if(sourceUrl)URL.revokeObjectURL(sourceUrl);
  sourceUrl=URL.createObjectURL(f);audio.src=sourceUrl;filename=f.name.replace(/\.[^.]+$/,'')||'Digital-Studio';audio.load();
  play.disabled=false;record.disabled=false;
  say('Brano caricato: '+f.name+'. Puoi ascoltarlo o registrare un video.');
@@ -101,13 +101,13 @@ record.addEventListener('click',async()=>{
   const video=canvas.captureStream(30);
   const tracks=[...video.getVideoTracks(),...output.stream.getAudioTracks()];
   const stream=new MediaStream(tracks);
-  const candidates=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+  const candidates=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4'];
   recordMime=candidates.find(x=>MediaRecorder.isTypeSupported(x))||'';
   recorder=new MediaRecorder(stream,recordMime?{mimeType:recordMime,videoBitsPerSecond:5000000}:undefined);
   recordMime=recorder.mimeType||recordMime||'video/webm';recorded=[];
   recorder.ondataavailable=e=>{if(e.data.size)recorded.push(e.data)};
   recorder.onerror=()=>say('Errore durante la registrazione video.');
-  recorder.onstop=()=>{video.getTracks().forEach(t=>t.stop());stop.disabled=true;record.disabled=false;finish();};
+  recorder.onstop=()=>{video.getTracks().forEach(t=>t.stop());stop.disabled=true;record.disabled=false;play.disabled=false;play.textContent='▶ Riproduci';finish();};
   audio.currentTime=0;recorder.start(1000);
   try{await audio.play();}catch(e){recorder.stop();throw e;}
   play.textContent='❚❚ Pausa';play.disabled=true;record.disabled=true;stop.disabled=false;say('Registrazione video in corso…');
