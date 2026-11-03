@@ -12,7 +12,7 @@ La vetrina presenta sei progetti:
 - [Franco QR Studio](https://franco-ficara-repository.francoficara1.workers.dev/apps/franco-qr-studio/foto.html): generatore web di QR, con selezione di foto dal PC per la miniatura e download del pacchetto [ZIP 1.1](https://franco-ficara-repository.francoficara1.workers.dev/Franco_QR_Studio_1_1.zip).
 - [Franco PC Cleaner Web](https://franco-ficara-repository.francoficara1.workers.dev/apps/franco-pc-cleaner/): ricerca duplicati in sola lettura, report CSV.
 - [AntiTruffa Web](https://franco-ficara-repository.francoficara1.workers.dev/apps/antitruffa/): demo locale euristica; non esegue verifica online dei link.
-- [Digital Studio Web](https://franco-ficara-repository.francoficara1.workers.dev/apps/digital-studio/): laboratorio musicale 16:9 e registrazione dal browser, dove supportata.
+- [Digital Studio Web](https://franco-ficara-repository.francoficara1.workers.dev/apps/digital-studio/): Video Lab beta: importa MP4/WebM, ritaglia intervalli, aggiunge musica e titoli ed esporta 16:9 WebM dal browser, dove supportato. Anche foto + MP3 e vecchio Cinema Lounge.
 - [MeteoScudo](https://meteo.francoficara.com/): portale web meteo.
 - [Franco Start](https://start.francoficara.com/): portale web di progetti.
 
