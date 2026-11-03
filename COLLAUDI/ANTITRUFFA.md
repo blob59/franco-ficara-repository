@@ -40,4 +40,15 @@ Ramo di preparazione: [prelancio/antitruffa-privacy-20261102](https://github.com
 - [ ] Rivedere la privacy prima di pubblicare l'app come versione pronta.
 - [ ] Collaudo insieme a QR Studio, PC Cleaner, MeteoScudo e Digital Studio.
 
-**Decisione:** proseguire con il lavoro senza annunciare o abilitare il prodotto sul sito del Repository.
+**Decisione precedente superata per la sola anteprima web:** il portale ora permette la prova locale, senza backend. La distribuzione del prodotto completo rimane bloccata fino ai controlli di privacy e sicurezza.
+
+## Aggiornamento del 3 novembre 2026 — prova browser e correzione classificazione
+
+- [x] L'autore ha testato la versione web con un SMS fittizio che minaccia il blocco del conto bancario e chiede password e OTP. Nella versione precedente il risultato era **60/100, Attenzione**: **anomalia confermata**.
+- [x] È stato corretto **soltanto il frontend di prova nel Repository**, non il backend Python ancora in collaudo: se il contenuto chiede esplicitamente credenziali, la valutazione sale almeno a 80/100; se è associata a minaccia o urgenza, almeno a 90/100.
+- [x] Test automatico sul codice corretto: messaggio originario **90/100 Pericolo**, richiesta semplice OTP **80/100 Pericolo**, testo educativo «non inserire la password» **30/100 Pochi indizi**, messaggio informativo neutro **5/100 Pochi indizi**; nessun errore JavaScript osservato.
+- [x] Test sul sito pubblico Cloudflare: **90/100, Pericolo**, segnalazione esplicita di richiesta credenziali, nessuna chiamata HTTP POST durante l'analisi.
+- [x] Corrette le istruzioni visualizzate: la demo non dichiara più un risultato «sicuro» né una funzione segnalazioni attiva. Le segnalazioni sono disabilitate.
+- [ ] Verificare altri falsi positivi/negativi, frasi più complesse, URL realmente fraudolenti e messaggi autentici. Il punteggio rimane una **euristica dimostrativa**, non una probabilità calibrata né una certificazione di sicurezza.
+
+**Stato pubblico:** soltanto **AntiTruffa Web — Prova locale**, con analisi nel browser e senza invio dei testi. Il programma completo con backend FastAPI **non** è stato distribuito.
