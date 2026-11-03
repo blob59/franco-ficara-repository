@@ -57,3 +57,25 @@ Il candidato principale per la voce **Digital Studio** è la **versione Windows*
 - [ ] Eseguibile firmato o avvisi chiari per file Windows; analisi antivirus.
 - [ ] Verificare ZIP, peso, canale di download reale e manuale; non distribuire senza l'ok dell'autore.
 - [ ] Concludere i collaudi degli altri quattro programmi.
+
+## Aggiornamento 3 novembre 2026 — Digital Studio **Video Lab Web** (nuovo)
+
+Durante il collaudo pubblico l'autore ha segnalato che la demo proposta come «Digital Studio» consentiva solo di caricare MP3 e animare un visualizzatore: **non importava video**. La descrizione in catalogo risultava quindi insufficiente.
+
+È stato conservato il visualizzatore originale in `public/apps/digital-studio/music.html`. La pagina principale `public/apps/digital-studio/index.html` è stata sostituita da un **Video Lab beta** con:
+- Importazione video locale MP4/WebM (nei limiti dei codec supportati dal browser).
+- Intervallo d'inizio e fine per un singolo filmato.
+- Musica opzionale con mixer di volume e audio originale attivabile/disattivabile.
+- Foto + MP3 per creare un filmato da immagine statica.
+- Visualizzatore musicale, titoli sovrapposti, anteprima, esportazione in 16:9 1920×1080.
+- Esportazione in WebM VP9/Opus dove disponibile, fallback MP4 solo dove il browser lo supporta. Nessun upload dei media al server.
+
+**Test funzionali già eseguiti in browser Chromium isolato:**
+- Video input sintetico MP4 (640×360, H.264/AAC), intervallo 1–3 secondi, colonna sonora MP3 aggiunta, titolo sovrapposto. Esportato file WebM di circa 2 secondi con video VP9 1920×1080 e audio Opus. Il frame del filmato originale era realmente presente (pixel non uniformi) e il livello audio esportato è risultato non nullo.
+- Foto JPG + brano MP3: esportato filmato WebM 1920×1080 con video VP9/audio Opus di circa 5 secondi.
+- Solo musica: esportato filmato WebM 1920×1080 con video/audio. Il vecchio Cinema Lounge resta accessibile tramite percorso separato.
+- Nessun errore JS durante i test di esportazione; controlli riattivati dopo il completamento.
+
+**Limiti da dichiarare:** non supporta montaggio multitraccia, transizioni, montaggio di clip multiple o un MP4 H.264/AAC garantito su qualunque sistema. L'elaborazione è in tempo reale nel browser e può essere pesante. Proporzioni differenti da 16:9 vengono ritagliate in modalità cover per non introdurre bande nere. Software Windows completo ancora distinto e non collaudato in questa sessione.
+
+**Verifiche pendenti:** prova su PC Windows reale dell'autore con filmati personali, compatibilità dispositivi/codec, video lunghi e prestazioni/memoria, montaggio Windows completo.
