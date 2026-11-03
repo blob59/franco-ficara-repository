@@ -52,3 +52,5 @@ Ramo di preparazione: [prelancio/antitruffa-privacy-20261102](https://github.com
 - [ ] Verificare altri falsi positivi/negativi, frasi più complesse, URL realmente fraudolenti e messaggi autentici. Il punteggio rimane una **euristica dimostrativa**, non una probabilità calibrata né una certificazione di sicurezza.
 
 **Stato pubblico:** soltanto **AntiTruffa Web — Prova locale**, con analisi nel browser e senza invio dei testi. Il programma completo con backend FastAPI **non** è stato distribuito.
+
+- [x] **Conferma dell'autore (3 novembre 2026):** dopo la correzione pubblicata, l'autore ha riprovato AntiTruffa e ha confermato che funziona. Il riscontro riguarda la prova web locale, non il backend completo.
