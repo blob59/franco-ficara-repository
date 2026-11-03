@@ -49,3 +49,12 @@ La versione iniziale `Franco_PC_Cleaner_3_4.zip` è stata esaminata ed è integr
 Il cleaner non elimina automaticamente i file duplicati. Spostare file o cartelle in quarantena/archivio **sullo stesso disco non libera spazio**; l'eliminazione definitiva comporta perdita dei file e va eseguita soltanto dopo una verifica manuale. La selezione manuale di un progetto, anche se protetto dal piano automatico, può interrompere programmi che dipendono dalla posizione originale.
 
 **Prossimo programma da collaudare:** AntiTruffa.
+
+
+## Aggiornamento — 3 novembre 2026: anteprima web di sola lettura
+
+È stata realizzata una **nuova applicazione web separata** dal programma Python Windows: `public/apps/franco-pc-cleaner/index.html`. Consente di scegliere una cartella o file locali, trovare copie **identiche per contenuto** tramite confronto completo in blocchi (senza upload) e scaricare un report CSV. Non include cancellazione, quarantena, ripristino né spostamenti; non equivale quindi a distribuire la versione Windows 3.5.
+
+**Prova automatica browser:** caricati quattro file fittizi (due identici da 4 byte e due differenti); trovato esattamente un gruppo, una copia supplementare, 4 byte di spazio teorico; esportazione CSV eseguita; nessun errore JavaScript nel test. Corretto anche il controllo di annullamento per evitare interferenze con scansioni successive. Resta opportuna una prova manuale su Windows con una cartella di test e su smartphone per valutare le differenze dei selettori file.
+
+**Stato:** anteprima web pronta da usare a scopo dimostrativo; release desktop **ancora in collaudo**. Non equiparare l'una all'altra.
