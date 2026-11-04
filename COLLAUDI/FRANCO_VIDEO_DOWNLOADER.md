@@ -26,3 +26,17 @@
 - yt-dlp, Deno e FFmpeg sono componenti di terzi, con licenze indipendenti. Il downloader è uno strumento separato, non ufficiale YouTube.
 - Non promettere compatibilità universale, bypass di DRM o download di contenuti protetti da accesso.
 - Conservare la 0.2 come riferimento del test positivo sul PC; l'aggiornamento 0.3 non sostituisce retroattivamente quel collaudo.
+
+## Esito finale: beta 0.3.1 pubblicata — 4 novembre 2026
+
+- L'autore ha confermato personalmente il funzionamento della versione **0.3.1** su Windows.
+- Il difetto del precedente messaggio «Download non riuscito (codice )» è stato risolto. Nel caso osservato `yt-dlp` aveva scritto `has already been downloaded`: il video era regolarmente presente. La nuova versione gestisce correttamente la situazione.
+- È stato caricato sul ramo `main` il file `Franco_Video_Downloader_0_3_1_MESSAGGI_CORRETTI.zip`.
+- **Verifica esterna dal dominio pubblico:** HTTP 200, `Content-Type: application/x-zip-compressed`, 13.994 byte. Archivio di dieci file, nessun errore al controllo CRC/testzip.
+- SHA-256 dello ZIP pubblicato: `0e3b83a8fc5fb06d110903b3459a2834c97464a24ba3e2ffb38cb5c7a49cfe1b`.
+- Link download pubblico: https://blob59.github.io/franco-ficara-repository/Franco_Video_Downloader_0_3_1_MESSAGGI_CORRETTI.zip
+- Sono stati aggiornati la scheda del prodotto, il catalogo, la guida e il README; il catalogo segna la beta Windows come «Disponibile». L'app resta un prodotto Windows da estrarre ed eseguire sul PC; il sito non esegue il programma online.
+
+**Limiti ancora da verificare:** compatibilità con altri computer, diversi antivirus/SmartScreen, interfaccia a vari DPI e affidabilità su molte tipologie di link. Il collaudo positivo dell'autore non costituisce certificazione di compatibilità universale.
+
+**Nota storica:** le voci di collaudo della 0.3 sopra riportate sono il piano iniziale, precedente al collaudo e rilascio 0.3.1; questa sezione contiene lo stato finale.
